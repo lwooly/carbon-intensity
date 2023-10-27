@@ -2,7 +2,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchRegionalData = createAsyncThunk('regional/fetchRegional', async () => {
         const response = await fetch('https://api.carbonintensity.org.uk/regional')
+        // const response = await fetch('https://ional') //for error testing
         const data = await response.json()
+
+        //delay for testing
+        await new Promise(resolve => setTimeout(resolve, 2000))
+
         return data.data[0]
 })
 

@@ -1,26 +1,17 @@
-import { useDispatch, useSelector} from "react-redux";
-import {fetchRegionalData, selectAllRegionalData} from '../features/regionalSlice'
-import { useEffect } from "react";
+
 import RegionalMap from "../components/RegionalMap";
+import { Box } from "@mui/material";
+import ForecastWidget from "../components/ForecastWidget";
+
+
 const Home = () => {
-    const dispatch = useDispatch()
-
-    const regionalDataStatus = useSelector(state => state.regional.status)
-
-    useEffect(() => {
-        if (regionalDataStatus === 'idle') {
-            dispatch(fetchRegionalData())
-        }
-    }, [regionalDataStatus, dispatch])
-
-    const regionalData = useSelector(selectAllRegionalData)
-    console.log(regionalData)
 
     return (
-        <div>
-            Homepage
-            <RegionalMap/>
-        </div>
+        <Box sx={{display:"flex"}}>
+            <ForecastWidget />
+            <RegionalMap />
+        </Box>
+
     );
 };
 
