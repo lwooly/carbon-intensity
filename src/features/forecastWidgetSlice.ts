@@ -6,8 +6,12 @@ import moment from "moment";
 export const fetchIntensityForecast = createAsyncThunk('forecastWidget/fetchForecastData',async () => {
     const postcode = 'BS3'
     const currentDateTime = moment().utc().format('YYYY-MM-DDTHH:mm[Z]');
-    console.log(`https://api.carbonintensity.org.uk/regional/intensity/${currentDateTime}/fw24h/postcode/${postcode}`)
-    const response = await fetch(`https://api.carbonintensity.org.uk/regional/intensity/${currentDateTime}}/fw24h/postcode/${postcode}`)
+    // console.log(`https://api.carbonintensity.org.uk/regional/intensity/${currentDateTime}/fw24h/postcode/${postcode}`)
+    const response = await fetch(`https://api.carbonintensity.org.uk/regional/intensity/${currentDateTime}/fw24h/postcode/${postcode}`)
+    const data = await response.json()
+    //delay for testing
+    await new Promise(resolve => setTimeout(resolve, 2000))
+    return data
 })
 
 const forecastWidgetSlice = createSlice({
@@ -32,8 +36,10 @@ const forecastWidgetSlice = createSlice({
                 state.status = 'loading'
             })
             .addCase(fetchIntensityForecast.fulfilled, (state, action) => {
-                state.status = 'loaded',
-                state.forecastData = action.payload;
+                // console.log(action.payload)
+                state.forecastData = action.payload,
+                state.status = 'loaded'
+                
             })
             .addCase(fetchIntensityForecast.rejected, (state, action) => {
                 state.error = action.error.message
