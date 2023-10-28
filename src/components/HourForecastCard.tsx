@@ -20,7 +20,7 @@ const HourForecastCard = ({ values, status }) => {
 
 
     return (
-        <Card sx={{ width:'25%', minWidth: 60, minHeight: '10em', padding: '1em', margin: '1em 0', backgroundColor:'lightgrey' }}>
+        <Card sx={{ width:'25%', minHeight: '10em', padding: '1em', margin: '1em 0', backgroundColor:'lightgrey' }}>
             {status === 'loading' && <CircularIndeterminate/>}
             {status === 'loaded' && (
                 <>

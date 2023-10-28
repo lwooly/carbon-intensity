@@ -2,12 +2,12 @@ import { CssBaseline } from "@mui/material"
 import Home from "./pages/Home"
 import Layout from "./features/layout/Layout"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import { createTheme, ThemeProvider } from "@mui/material"
+import { createTheme, ThemeProvider, responsiveFontSizes } from "@mui/material"
 
 
 
 function App() {
-  const theme = createTheme({
+  let theme = createTheme({
     palette: {
       primary: {
         main: '#FFF',
@@ -36,8 +36,8 @@ function App() {
     shape: {
       borderRadius: 24
     },
-
   })
+  theme = responsiveFontSizes(theme)
 
   return (
     <>

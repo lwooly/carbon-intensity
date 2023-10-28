@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Box, Card, Typography } from '@mui/material';
-import { fetchIntensityForecast } from '../features/forecastWidgetSlice';
+import { fetchIntensityForecast } from '../features/slices/forecastWidgetSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import HourForecastCard from './HourForecastCard';
 import ForecastCarousel from './ForecastCarousel';

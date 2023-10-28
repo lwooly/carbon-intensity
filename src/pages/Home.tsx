@@ -8,15 +8,15 @@ const Home = () => {
 
     return (
         <>
-            <Grid container spacing={2}>
-                <Grid item xs={6} md={8}>
+            {/* <Grid container spacing={2}>
+                <Grid item md={8}> */}
                     <HomeTitle/>
                     <ForecastWidget/>
-                </Grid>
-                <Grid item xs={6} md={4}>
+                {/* </Grid>
+                <Grid item md={4}> */}
                 <RegionalMap />
-                </Grid>
-            </Grid>
+                {/* </Grid> */}
+            {/* // </Grid> */}
         </>
 
     );

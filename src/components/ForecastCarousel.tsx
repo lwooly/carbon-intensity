@@ -34,7 +34,7 @@ const ForecastCarousel = ({ values, status, location }) => {
 
 
     return (
-        <Paper sx={{ p: 2, flex: 1 }}>
+        <Paper sx={{ p: 2, maxWidth:'100% '}}>
             <Typography variant='h3' component={'h1'}>
                 Carbon Intensity Forecast
             </Typography>

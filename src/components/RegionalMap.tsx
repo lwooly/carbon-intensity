@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectAllRegionalData, fetchRegionalData } from '../features/regionalSlice';
+import { selectAllRegionalData, fetchRegionalData } from '../features/slices/regionalSlice';
 import { svgIntensityColors } from '../features/regionalData/regionalDataFns';
 import { Box, Paper, Typography } from '@mui/material';
 import CircularIndeterminate from './CircularIndeterminate';
