@@ -16,12 +16,20 @@ const stylesSlice = createSlice({
                 md: 3,
                 lg: 4,
                 xl: 5
-            }
+            },
+            darkMode: false
+
     },
     reducers: {
+        toggleDarkMode: state => {
+            state.darkMode = !state.darkMode
+        }
     }
 })
 
+//reducer
 export default stylesSlice.reducer
-
+//actions
+export const { toggleDarkMode } = stylesSlice.actions
+//selectors
 export  const selectAllStyles = state => state.appStyles

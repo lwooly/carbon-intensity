@@ -10,7 +10,6 @@ const ForecastCarousel = ({ values, status, location }) => {
     const cardsNum = 6;
     //save state of value indexs to display in the carousel.
     const [cardIndexs, setCardIndexs] = useState(Array.from({length:cardsNum}, (_,i) =>i))
-    console.log(cardIndexs)
 
     const cards = values.map((hourData, i) => {
         return <HourForecastCard key={i} values={hourData} status={status} />
@@ -18,7 +17,6 @@ const ForecastCarousel = ({ values, status, location }) => {
 
     const handleClick = (event) => {
         const action = event.target.getAttribute('data-action')
-        console.log(action)
         let n = 0;
         if (action === 'next') {
             n = 1
