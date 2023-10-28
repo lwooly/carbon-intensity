@@ -25,8 +25,13 @@ const ForecastWidget = () => {
 
 
     let cardData = new Array(12).fill('data');
+    let location = {}
 
     if (status === 'loaded' && forecastData?.data?.data) {
+        location = {
+            postcode:forecastData.data.postcode,
+            area:forecastData.data.shortname
+        }
         cardData = forecastData.data.data.filter((hourData, i) => {
             if (i % 2 === 0 && i < 23) {
                 return true
@@ -34,11 +39,10 @@ const ForecastWidget = () => {
         })
     }
 
-    console.log(cardData)
 
     return (
-        <Box sx={{display: 'flex', padding: '5em' }}>
-            <ForecastCarousel values={cardData} status={status}/>
+        <Box sx={{display: 'flex'}}>
+            <ForecastCarousel values={cardData} status={status} location={location}/>
             {error && <Typography>API error: {error}</Typography>}
         </Box>
     );

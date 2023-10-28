@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectAllRegionalData, fetchRegionalData } from '../features/regionalSlice';
 import { svgIntensityColors } from '../features/regionalData/regionalDataFns';
-import { Box, Typography } from '@mui/material';
+import { Box, Paper, Typography } from '@mui/material';
 import CircularIndeterminate from './CircularIndeterminate';
 
 const RegionalMap = () => {
@@ -49,9 +49,8 @@ const RegionalMap = () => {
 
 
     return (
-
         <section className='regional-map'>
-            <Box sx={{ position: 'relative', p: 4 }}>
+            <Paper sx={{ position: 'relative', p: 10 }}>
                 {(regionalDataState === 'loading' &&
                     <Box sx={{ position: 'absolute', top: "50%", left: '50%', transform: 'translate(-50%, -50%)' }}>
                         <CircularIndeterminate />
@@ -104,7 +103,7 @@ const RegionalMap = () => {
                             id="South West England" />
                     </g>
                 </svg>
-            </Box>
+            </Paper>
             {(regionalErrorState && <Typography>API error: {regionalErrorState}</Typography>)}
         </section>
     );

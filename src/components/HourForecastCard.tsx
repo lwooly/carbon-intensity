@@ -17,7 +17,7 @@ const HourForecastCard = ({ values, status }) => {
     //present time data
     const datetime = new Date(from)
     const time = datetime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
-    console.log(time)
+
 
     return (
         <Card sx={{ width:'25%', minWidth: 60, minHeight: '10em', padding: '1em', margin: '1em 0', backgroundColor:'lightgrey' }}>
