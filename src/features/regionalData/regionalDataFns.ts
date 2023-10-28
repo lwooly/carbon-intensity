@@ -1,12 +1,14 @@
 export const svgIntensityColors = (data) => {
 
     const intensityColors = {
-        'very high': 'red',
-        'high' : 'orange',
-        'moderate': 'yellow',
-        'low': 'lightgreen',
-        'very low': 'darkgreen'
+        'very high': '#B71C1C',  // Deep red
+        'high': '#EF6C00',      // Deep orange
+        'moderate': '#FFEB3B',  // Bright yellow
+        'low': '#81C784',       // Match with the light green from the theme but a bit darker
+        'very low': '#207867'   // Using the dark green from your theme
     }
+    
+    
 
     const regionalData = data.regions
 

@@ -50,7 +50,7 @@ const RegionalMap = () => {
 
     return (
         <section className='regional-map'>
-            <Paper sx={{ position: 'relative', p: 10 }}>
+            <Paper sx={{ position: 'relative', p: 10, m:5 }}>
                 {(regionalDataState === 'loading' &&
                     <Box sx={{ position: 'absolute', top: "50%", left: '50%', transform: 'translate(-50%, -50%)' }}>
                         <CircularIndeterminate />
