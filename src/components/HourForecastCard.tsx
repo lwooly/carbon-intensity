@@ -14,23 +14,19 @@ const HourForecastCard = ({ values, status }) => {
         index = values.intensity?.index;
     }
 
-
-
-
-
-
-
-
-
+    //present time data
+    const datetime = new Date(from)
+    const time = datetime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+    console.log(time)
 
     return (
-        <Card sx={{ minWidth: 60 }}>
-            {status === 'loading' && <CircularIndeterminate />}
+        <Card sx={{ width:'25%', minWidth: 60, minHeight: '10em', padding: '1em', margin: '1em 0', backgroundColor:'lightgrey' }}>
+            {status === 'loading' && <CircularIndeterminate/>}
             {status === 'loaded' && (
                 <>
-                    <Typography>From: {from}</Typography>
-                    <Typography>Intensity: {forecast}</Typography>
-                    <Typography>Index: {index}</Typography>
+                    <Typography variant="h5" gutterBottom>{time}</Typography>
+                    <Typography variant="h6" gutterBottom>Intensity: {forecast}</Typography>
+                    <Typography variant="h6" gutterBottom>Index: {index}</Typography>
                 </>
             )}
         </Card>

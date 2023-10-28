@@ -3,6 +3,7 @@ import { Box, Card, Typography } from '@mui/material';
 import { fetchIntensityForecast } from '../features/forecastWidgetSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import HourForecastCard from './HourForecastCard';
+import ForecastCarousel from './ForecastCarousel';
 
 const ForecastWidget = () => {
     const dispatch = useDispatch()
@@ -27,19 +28,17 @@ const ForecastWidget = () => {
 
     if (status === 'loaded' && forecastData?.data?.data) {
         cardData = forecastData.data.data.filter((hourData, i) => {
-            if (i < 2 || i % 2 !== 0 || i > 24) {
-                return false
-            } else {
+            if (i % 2 === 0 && i < 23) {
                 return true
             }
         })
     }
 
+    console.log(cardData)
+
     return (
-        <Box sx={{ display: 'flex', padding: '5em' }}>
-            {cardData.map((hourData, i) => {
-                return <HourForecastCard key={i} values={hourData} status={status}/>
-            })}
+        <Box sx={{display: 'flex', padding: '5em' }}>
+            <ForecastCarousel values={cardData} status={status}/>
             {error && <Typography>API error: {error}</Typography>}
         </Box>
     );
