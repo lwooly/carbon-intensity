@@ -7,13 +7,34 @@ import { useSelector } from "react-redux";
 import { selectAllStyles } from "../features/slices/stylesSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { fetchRegionalData, fetchAreaFromPostCode } from "../features/slices/regionalForecastSlice";
+import { fetchRegionalData, fetchAreaFromPostCode, fetchUserLocationAndPostcode } from "../features/slices/regionalForecastSlice";
 
 const Home = () => {
     const { padding, margin } = useSelector(selectAllStyles)
 
     const dispatch = useDispatch()
     //loaded regional data state from redux store for graphics on this page
+
+
+    //get user location and postcode
+    const userLocationStatus = useSelector(state => state.regionalForecast.userLocation.status)
+
+    useEffect(() => {
+        if (userLocationStatus === 'idle') {
+            dispatch(fetchUserLocationAndPostcode())
+        }
+    }, [userLocationStatus, dispatch])
+
+//get search area from postcode
+    const postcode = useSelector(state => state.regionalForecast.userLocation.postcode)
+    const areaSearchStatus = useSelector(state => state.regionalForecast.searchArea.status)
+
+    useEffect(() => {
+        if (userLocationStatus === 'loaded') {
+            dispatch(fetchAreaFromPostCode(postcode))
+        }
+    }, [dispatch, postcode])
+
 
     const regionalDataState = useSelector(state => state.regionalForecast.status)
 
@@ -23,22 +44,18 @@ const Home = () => {
         }
     }, [regionalDataState, dispatch])
 
-    const areaSearchStatus = useSelector(state => state.regionalForecast.searchArea.status)
-
-    console.log(areaSearchStatus)
-
-    useEffect(() => {
-        if (areaSearchStatus === 'idle') {
-            let postcode = '';
-            try {
-                const response = await 
-            }
-
-
-            dispatch(fetchAreaFromPostCode(postcode))
-        }
-    }, [fetchAreaFromPostCode, dispatch])
     
+
+    
+   
+
+
+    
+    console.log(userLocationStatus)
+
+  
+    
+
 
     return (
         <>
