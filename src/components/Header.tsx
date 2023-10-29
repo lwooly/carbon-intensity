@@ -23,7 +23,6 @@ export default function Header() {
         setIsDark(!isDark)
     }
 
-
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -37,8 +36,8 @@ export default function Header() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        News
+                    <Typography variant="h5" component="div" sx={{ flexGrow: 1, fontWeight: 700 }}>
+                        Carbon Intensity Dashboard
                     </Typography>
                     <IconButton color='secondary' onClick={handleToggleDarkMode} >
                         {isDark ? (<DarkModeIcon sx={{ color: 'secondary.main' }} />) : (<LightModeIcon sx={{ color: 'secondary.main' }} />)}

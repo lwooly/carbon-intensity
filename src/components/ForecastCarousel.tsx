@@ -1,11 +1,15 @@
 import { useState } from 'react';
-import { Paper, Box, Button, MobileStepper, Typography } from '@mui/material';
+import { Paper, Card, Box, Button, MobileStepper, Typography, List } from '@mui/material';
 import HourForecastCard from './HourForecastCard';
+import { useTheme } from '@mui/material/styles'
 
 
 
 
 const ForecastCarousel = ({ values, status, location }) => {
+    const theme = useTheme()
+    console.log(theme)
+
     //number of cards to show
     const cardsNum = 6;
     //save state of value indexs to display in the carousel.
@@ -32,7 +36,7 @@ const ForecastCarousel = ({ values, status, location }) => {
 
 
     return (
-        <Paper sx={{ p: 2, maxWidth:'100% '}}>
+        <Card sx={{ p: 2, width:'100%'}}>
             <Typography variant='h3' component={'h1'}>
                 Carbon Intensity Forecast
             </Typography>
@@ -42,9 +46,10 @@ const ForecastCarousel = ({ values, status, location }) => {
             <Typography variant='h6' component={'h3'}>
             Area: {location.area}
             </Typography>
-            <Box sx={{ display: 'flex', gap: 2 }}>
+            
+            <List sx={{ display: 'flex', flexDirection:'column', gap:1, padding:2, borderRadius:0.5, border:'solid 1px black', md:{flexDirection:'row'}}}>
                 {cardIndexs.map(cardIndex => cards[cardIndex])}
-            </Box>
+            </List>
             <Box sx={{ display: 'flex' }}>
                 <MobileStepper
                     variant="progress"
@@ -60,7 +65,7 @@ const ForecastCarousel = ({ values, status, location }) => {
                     </Button>}
                 />
             </Box>
-        </Paper>
+        </Card>
     );
 };
 

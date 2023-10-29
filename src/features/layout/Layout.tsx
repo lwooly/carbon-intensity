@@ -8,11 +8,8 @@ const Layout = ({children}) => {
         <header>
              <Header/>
         </header>
-        <main>
-            <section>
-
-            </section>
-            <Outlet/>
+        <main style={{maxWidth: 1536, margin:'auto'}}>
+        <Outlet/>
         </main>
         <footer>
 

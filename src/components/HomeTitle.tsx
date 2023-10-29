@@ -9,7 +9,7 @@ const {padding, margin} = useSelector(selectAllStyles)
 
     return (
         <>
-            <Paper sx={{display:'flex', bgcolor:'secondary.light', p:padding, m:margin}}>
+            <Paper sx={{display:'flex', bgcolor:'secondary.light', p:padding, width:'100%'}}>
             <Box sx={{ flex: 1, pr: 2 }}>
                 <Typography variant={'h3'} component={'h1'} gutterBottom>
                     Sustainable choices <br/>through insight...
