@@ -15,6 +15,12 @@ const ForecastWidget = () => {
         return state.regionalForecast
     })
 
+    // console.log(regionalForecastState)
+
+    //get region that forecastis to be shown for 
+    //this can come after once regional array is created.
+    const regionId = useSelector(state => state.regionalForecast.searchArea.regionId) - 1 //would be better to map and return selections based on region id not array position
+
     //destructure state
     const { regionData: { data: forecastData }, status, error } = regionalForecastState
 
@@ -27,9 +33,6 @@ const ForecastWidget = () => {
 
     //check store status and forecast data avaialble
     if (status === 'loaded' && forecastData) {
-
-        //this can come after once regional array is created.
-        const regionId = 7
 
         //manipulate forecast data to easier to use state for card componenents in an object
 
@@ -47,6 +50,9 @@ const ForecastWidget = () => {
             })
 
         location = cardData[0].location
+        if (location === 'GB') {
+            location = 'Nationwide average'
+        }
     }
 
     return (

@@ -12,7 +12,7 @@ function App() {
   const isDark = useSelector(state => state.appStyles.darkMode)
   const theme = renderTheme(isDark)
 
-  console.log(theme)
+  // console.log(theme)
 
   return (
     <>

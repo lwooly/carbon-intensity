@@ -7,13 +7,13 @@ import { useSelector } from "react-redux";
 import { selectAllStyles } from "../features/slices/stylesSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { fetchRegionalData } from "../features/slices/regionalForecastSlice";
+import { fetchRegionalData, fetchAreaFromPostCode } from "../features/slices/regionalForecastSlice";
 
 const Home = () => {
     const { padding, margin } = useSelector(selectAllStyles)
 
-    //loaded regional data state from redux store for graphics on this page
     const dispatch = useDispatch()
+    //loaded regional data state from redux store for graphics on this page
 
     const regionalDataState = useSelector(state => state.regionalForecast.status)
 
@@ -22,6 +22,23 @@ const Home = () => {
             dispatch(fetchRegionalData())
         }
     }, [regionalDataState, dispatch])
+
+    const areaSearchStatus = useSelector(state => state.regionalForecast.searchArea.status)
+
+    console.log(areaSearchStatus)
+
+    useEffect(() => {
+        if (areaSearchStatus === 'idle') {
+            let postcode = '';
+            try {
+                const response = await 
+            }
+
+
+            dispatch(fetchAreaFromPostCode(postcode))
+        }
+    }, [fetchAreaFromPostCode, dispatch])
+    
 
     return (
         <>

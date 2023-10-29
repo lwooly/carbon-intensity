@@ -12,7 +12,7 @@ const RegionalMap = () => {
     //get regional data from redux store
     const regionalData24hr = useSelector(selectAllRegionalData)
 
-    console.log(selectAllRegionalData, `select all`)
+    // console.log(selectAllRegionalData, `select all`)
 
     let currentRegionalData;
     if (regionalDataState === 'loaded') {
@@ -23,7 +23,7 @@ const RegionalMap = () => {
     //update which version of the data reaches the user based on time etc.
     const regionalData = currentRegionalData;
 
-    console.log(regionalData)
+    // console.log(regionalData)
 
     //loaded error state from redux store
     const regionalErrorState = useSelector(state => state.regionalForecast.error)
