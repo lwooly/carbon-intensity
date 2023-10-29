@@ -1,7 +1,10 @@
+//NOT USED
+
+
+
 import { dialogTitleClasses } from "@mui/material";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import moment from "moment";
-
 
 export const fetchIntensityForecast = createAsyncThunk('forecastWidget/fetchForecastData',async () => {
     const postcode = 'BS3'
@@ -14,7 +17,7 @@ export const fetchIntensityForecast = createAsyncThunk('forecastWidget/fetchFore
     return data
 })
 
-const forecastWidgetSlice = createSlice({
+const forecastSlice = createSlice({
     
         name: 'forecastWidget',
         initialState: {
@@ -50,4 +53,4 @@ const forecastWidgetSlice = createSlice({
 
 )
 
-export default forecastWidgetSlice.reducer
+export default forecastSlice.reducer

@@ -1,30 +1,32 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectAllRegionalData, fetchRegionalData } from '../features/slices/regionalSlice';
+import { selectAllRegionalData, fetchRegionalData } from '../features/slices/regionalForecastSlice';
 import { svgIntensityColors } from '../features/regionalData/regionalDataFns';
 import { Box, Paper, Typography } from '@mui/material';
 import CircularIndeterminate from './CircularIndeterminate';
 
 const RegionalMap = () => {
     // use regional intensity data to colour map svg
-    const dispatch = useDispatch()
-
-    //loaded regional data state from redux store
-    const regionalDataState = useSelector(state => state.regional.status)
-
-    useEffect(() => {
-        if (regionalDataState === 'idle') {
-            dispatch(fetchRegionalData())
-        }
-    }, [regionalDataState, dispatch])
+    const regionalDataState = useSelector(state => state.regionalForecast.status)
 
     //get regional data from redux store
-    const regionalData = useSelector(selectAllRegionalData)
+    const regionalData24hr = useSelector(selectAllRegionalData)
+
+    console.log(selectAllRegionalData, `select all`)
+
+    let currentRegionalData;
+    if (regionalDataState === 'loaded') {
+        currentRegionalData = regionalData24hr?.data[0]
+    }
 
 
+    //update which version of the data reaches the user based on time etc.
+    const regionalData = currentRegionalData;
+
+    console.log(regionalData)
 
     //loaded error state from redux store
-    const regionalErrorState = useSelector(state => state.regional.error)
+    const regionalErrorState = useSelector(state => state.regionalForecast.error)
 
     // ref svg file to get path elements
     const svgRef = useRef(null)
@@ -36,7 +38,7 @@ const RegionalMap = () => {
         if (svg) {
             const paths = Array.from(svg.querySelectorAll('path'))
 
-            if (regionalData.regions) {
+            if (regionalData?.regions) {
                 // get colors to represent each regions intensity data
                 const svgColors = svgIntensityColors(regionalData)
                 //edit svg path styles
@@ -50,12 +52,12 @@ const RegionalMap = () => {
 
     return (
         <section className='regional-map'>
-            <Paper sx={{ position: 'relative', p: 5, width:"100%" }}>
+            <Paper sx={{ position: 'relative', p: 5, width: "100%" }}>
                 {(regionalDataState === 'loading' &&
                     <Box sx={{ position: 'absolute', top: "50%", left: '50%', transform: 'translate(-50%, -50%)' }}>
                         <CircularIndeterminate />
                     </Box>
-                    )}
+                )}
 
                 <svg ref={svgRef} width="100%" viewBox="0 0 114.01477 189.52116" version="1.1" id="svg1" xmlns="http://www.w3.org/2000/svg">
                     <g id="layer1" transform="translate(-25.64553,-62.442739)">

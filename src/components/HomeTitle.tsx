@@ -7,6 +7,8 @@ import { selectAllStyles } from '../features/slices/stylesSlice';
 const HomeTitle = () => {
 const {padding, margin} = useSelector(selectAllStyles)
 
+
+
     return (
         <>
             <Paper sx={{display:'flex', bgcolor:'secondary.light', p:padding, width:'100%'}}>

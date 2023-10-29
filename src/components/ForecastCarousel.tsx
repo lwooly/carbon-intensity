@@ -4,18 +4,18 @@ import HourForecastCard from './HourForecastCard';
 import { useTheme } from '@mui/material/styles'
 import BasicModal from './BasicModal';
 import InfoIcon from '@mui/icons-material/Info';
-
-
+import { LocalConvenienceStoreOutlined } from '@mui/icons-material';
 
 
 const ForecastCarousel = ({ values, status, location }) => {
     const theme = useTheme()
-    console.log(theme)
 
     //number of cards to show
     const cardsNum = 6;
     //save state of value indexs to display in the carousel.
     const [cardIndexs, setCardIndexs] = useState(Array.from({length:cardsNum}, (_,i) =>i))
+
+    //create card data
 
     const cards = values.map((hourData, i) => {
         return <HourForecastCard key={i} values={hourData} status={status} />
@@ -47,11 +47,8 @@ const ForecastCarousel = ({ values, status, location }) => {
                 </Typography>
                 <BasicModal icon={<InfoIcon/>} title={modalTitle} text={modalDescriptiveText}/>
             </Box>
-            <Typography variant='h6' component={'h2'}>
-                Postcode: {location.postcode}
-            </Typography>
             <Typography variant='h6' component={'h3'}>
-            Area: {location.area}
+            Area: {location}
             </Typography>
             
             <List sx={{ display: 'flex', flexDirection:'column', gap:1, padding:2, borderRadius:0.5, border:'solid 1px black', md:{flexDirection:'row'}}}>

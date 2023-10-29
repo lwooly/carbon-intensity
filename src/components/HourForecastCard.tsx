@@ -11,9 +11,9 @@ const HourForecastCard = ({ values, status }) => {
     let from, forecast, index;
 
     if (status === "loaded" && values) {
-        from = values.from;
-        forecast = values.intensity?.forecast;
-        index = values.intensity?.index;
+        from = values.fromTime;
+        forecast = values.intensity.forecast;
+        index = values.intensity.index;
     }
 
     //present time data
@@ -24,7 +24,7 @@ const HourForecastCard = ({ values, status }) => {
     //render bar chart
     //calculate bar length
     const maxIndex = 350
-    const barLength = 100/maxIndex * Number(forecast)
+    const barLength = 15 + 85/maxIndex * Number(forecast)
     const barPerc = `${barLength}%`
 
     //determine bar colours
