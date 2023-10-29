@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import moment from "moment";
 
+
 export const fetchRegionalData = createAsyncThunk('regionalForecast/fetchRegional', async () => {
     //new - fetch 24hr for all gb regions.
     const currentDateTime = moment().utc().format('YYYY-MM-DDTHH:mm[Z]');
