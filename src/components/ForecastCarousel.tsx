@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Paper, Card, Box, Button, MobileStepper, Typography, List } from '@mui/material';
 import HourForecastCard from './HourForecastCard';
 import { useTheme } from '@mui/material/styles'
+import BasicModal from './BasicModal';
+import InfoIcon from '@mui/icons-material/Info';
 
 
 
@@ -33,13 +35,18 @@ const ForecastCarousel = ({ values, status, location }) => {
         })
         setCardIndexs(newCardIndexs)
     }
+    const modalTitle = 'Carbon Intensity Forcast Information'
+    const modalDescriptiveText = 'The "carbon intensity" of electricity is a measure of how many grams of carbon dioxide (CO2) emissions are produced for every kilowatt-hour of electricity consumed. This number will be higher when a significant amount of coal or gas is being used and lower when more renewables (like wind or solar) or nuclear energy are being used.'
 
 
     return (
         <Card sx={{ p: 2, width:'100%'}}>
-            <Typography variant='h3' component={'h1'}>
-                Carbon Intensity Forecast
-            </Typography>
+            <Box sx={{display:'flex', alignItems:'center', justifyContent:"space-between"}}>
+                <Typography variant='h3' component={'h1'}>
+                    Carbon Intensity Forecast
+                </Typography>
+                <BasicModal icon={<InfoIcon/>} title={modalTitle} text={modalDescriptiveText}/>
+            </Box>
             <Typography variant='h6' component={'h2'}>
                 Postcode: {location.postcode}
             </Typography>
