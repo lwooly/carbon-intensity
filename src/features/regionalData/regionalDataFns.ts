@@ -1,10 +1,12 @@
 export const intensityColors = {
-    'very high': '#B71C1C',  // Deep red
-    'high': '#EF6C00',      // Deep orange
-    'moderate': '#FFEB3B',  // Bright yellow
-    'low': '#81C784',       // Match with the light green from the theme but a bit darker
-    'very low': '#207867'   // Using the dark green from your theme
+    'very high': 'hsla(0, 77%, 39%, 1.0)',
+    'high': 'hsla(24, 100%, 47%, 1.0)',
+    'moderate': 'hsla(54, 100%, 71%, 1.0)',
+    'low': 'hsla(123, 42%, 63%, 1.0)',
+    'very low': 'hsla(162, 60%, 26%, 1.0)'
 }
+
+
 
 
 export const svgIntensityColors = (data) => {

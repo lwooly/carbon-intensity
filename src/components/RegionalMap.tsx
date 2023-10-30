@@ -1,11 +1,23 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectAllRegionalData, fetchRegionalData } from '../features/slices/regionalForecastSlice';
-import { svgIntensityColors } from '../features/regionalData/regionalDataFns';
-import { Box, Paper, Typography } from '@mui/material';
+import { lightIntensityColors, svgIntensityColors } from '../features/regionalData/regionalDataFns';
+import { Box, Paper, Typography, colors } from '@mui/material';
 import CircularIndeterminate from './CircularIndeterminate';
+import { addSearchArea } from '../features/slices/regionalForecastSlice';
+
+const lightenIntensityColors = (svgColors) => {
+    const lightColors = {}
+    for (const [key, originalColor] of Object.entries(svgColors)) {
+        const lightColor = `${originalColor.slice(0, -6)}, 0.5)`
+        lightColors[key] = lightColor
+    }
+
+    return lightColors
+}
 
 const RegionalMap = () => {
+    const dispatch = useDispatch()
     // use regional intensity data to colour map svg
     const regionalDataState = useSelector(state => state.regionalForecast.status)
 
@@ -19,11 +31,8 @@ const RegionalMap = () => {
         currentRegionalData = regionalData24hr?.data[0]
     }
 
-
     //update which version of the data reaches the user based on time etc.
     const regionalData = currentRegionalData;
-
-    // console.log(regionalData)
 
     //loaded error state from redux store
     const regionalErrorState = useSelector(state => state.regionalForecast.error)
@@ -41,9 +50,17 @@ const RegionalMap = () => {
             if (regionalData?.regions) {
                 // get colors to represent each regions intensity data
                 const svgColors = svgIntensityColors(regionalData)
+                const lightSvgColors = lightenIntensityColors(svgColors)
+                console.log(lightSvgColors)
+
                 //edit svg path styles
                 paths.map((path) => {
-                    path.style.fill = svgColors[path.id]
+                    const regionId = path.id
+                    const originalFillColour = svgColors[regionId]
+                    path.style.fill = originalFillColour
+                    path.onclick = () => dispatch(addSearchArea(regionId))
+                    path.onmouseover = () => path.style.fill = lightSvgColors[regionId]
+                    path.onmouseleave = () => path.style.fill = originalFillColour
                 })
             }
         }
