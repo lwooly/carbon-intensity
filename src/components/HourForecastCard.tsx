@@ -8,12 +8,14 @@ import { intensityColors } from '../features/regionalData/regionalDataFns';
 
 const HourForecastCard = ({ values, status }) => {
 
+    console.log(values)
+
     let from, forecast, index;
 
     if (status === "loaded" && values) {
-        from = values.fromTime;
-        forecast = values.intensity.forecast;
-        index = values.intensity.index;
+        from = values.from;
+        forecast = values.forecast.intensity.forecast;
+        index = values.forecast.intensity.index;
     }
 
     //present time data
@@ -24,7 +26,7 @@ const HourForecastCard = ({ values, status }) => {
     //render bar chart
     //calculate bar length
     const maxIndex = 350
-    const barLength = 15 + 85/maxIndex * Number(forecast)
+    const barLength = 10 + 90/maxIndex * Number(forecast)
     const barPerc = `${barLength}%`
 
     //determine bar colours

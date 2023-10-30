@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import HourForecastCard from './HourForecastCard';
 import ForecastCarousel from './ForecastCarousel';
 import { fetchRegionalData } from '../features/slices/regionalForecastSlice';
-import { HouseTwoTone } from '@mui/icons-material';
+import { HouseRounded, HouseTwoTone } from '@mui/icons-material';
 
 const ForecastWidget = () => {
     const dispatch = useDispatch()
@@ -19,7 +19,7 @@ const ForecastWidget = () => {
 
     //get region that forecastis to be shown for 
     //this can come after once regional array is created.
-    const regionId = useSelector(state => state.regionalForecast.searchArea.regionId) - 1 //would be better to map and return selections based on region id not array position
+    const regionName = useSelector(state => state.regionalForecast.searchArea.regionName)//would be better to map and return selections based on region id not array poso
 
     //destructure state
     const { regionData: { data: forecastData }, status, error } = regionalForecastState
@@ -39,17 +39,23 @@ const ForecastWidget = () => {
         cardData = forecastData
             //get 12 hour slots - to be refined
             .filter((_, i) => i % 2 === 0 && i < 23)
+
             //get specific regional data from the forecast data
             .map(hourDataGB => {
+                const regionData = hourDataGB.regions.filter(region => {
+                    return region.shortname === regionName
+                })
+
+                const {regions, ...rest} = hourDataGB
+
                 return {
-                    fromTime: hourDataGB.from,
-                    intensity: hourDataGB.regions[regionId].intensity,
-                    location: hourDataGB.regions[regionId].shortname,
-                    regionId
+                    ...rest,
+                    forecast: regionData[0]
                 }
             })
 
-        location = cardData[0].location
+        location = cardData[0].forecast.shortname
+       
         if (location === 'GB') {
             location = 'Nationwide average'
         }

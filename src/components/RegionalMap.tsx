@@ -51,7 +51,6 @@ const RegionalMap = () => {
                 // get colors to represent each regions intensity data
                 const svgColors = svgIntensityColors(regionalData)
                 const lightSvgColors = lightenIntensityColors(svgColors)
-                console.log(lightSvgColors)
 
                 //edit svg path styles
                 paths.map((path) => {
