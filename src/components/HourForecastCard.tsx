@@ -6,9 +6,9 @@ import { intensityColors } from '../features/regionalData/regionalDataFns';
 
 
 
+
 const HourForecastCard = ({ values, status }) => {
 
-    console.log(values)
 
     let from, forecast, index;
 
@@ -25,7 +25,7 @@ const HourForecastCard = ({ values, status }) => {
 
     //render bar chart
     //calculate bar length
-    const maxIndex = 350
+    const maxIndex = 400
     const barLength = 10 + 90/maxIndex * Number(forecast)
     const barPerc = `${barLength}%`
 
