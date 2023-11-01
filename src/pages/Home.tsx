@@ -13,7 +13,7 @@ import {
 } from '../features/slices/regionalForecastSlice';
 
 function Home() {
-  const { padding, margin } = useSelector(selectAllStyles);
+  // const { padding, margin } = useSelector(selectAllStyles);
 
   const dispatch = useDispatch();
   // loaded regional data state from redux store for graphics on this page
@@ -30,7 +30,7 @@ function Home() {
   }, [userLocationStatus, dispatch]);
 
   // get search area from postcode
-  const postcode = useSelector(
+  const postcode: string = useSelector(
     (state) => state.regionalForecast.userLocation.postcode
   );
   const areaSearchStatus = useSelector(

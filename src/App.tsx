@@ -1,5 +1,8 @@
 import {
-  CssBaseline, createTheme, ThemeProvider, responsiveFontSizes,
+  CssBaseline,
+  createTheme,
+  ThemeProvider,
+  responsiveFontSizes,
 } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -25,6 +28,7 @@ function App() {
       </Router>
     </ThemeProvider>
   );
+  // return <h1 data-testid="title">Hello world</h1>;
 }
 
 export default App;

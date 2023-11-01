@@ -14,20 +14,16 @@ import CircularIndeterminate from './CircularIndeterminate';
 
 const lightenIntensityColors = (svgColors) => {
   const lightColors = {};
-//   console.log(Array.from(Object.entries(svgColors)))
-  const tempArr = Array.from(Object.entries(svgColors))
-  tempArr.map(keyValue => {
-    lightColors[keyValue[0]] = `${keyValue[1].slice(0, -6)}, 0.5)`
+  //   console.log(Array.from(Object.entries(svgColors)))
+  const tempArr = Array.from(Object.entries(svgColors));
+  tempArr.map((keyValue) => {
+    lightColors[keyValue[0]] = `${keyValue[1].slice(0, -6)}, 0.5)`;
   });
 
-  
-
-
-  console.log(lightColors, `light colours`)
+  console.log(lightColors, `light colours`);
 
   return lightColors;
 };
-
 
 function RegionalMap() {
   const dispatch = useDispatch();
