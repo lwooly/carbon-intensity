@@ -57,7 +57,7 @@ function ForecastCarousel({ values, status, location }) {
           justifyContent: 'space-between',
         }}
       >
-        <Typography variant="h3" component="h1">
+        <Typography variant="h3" component="h2">
           Carbon Intensity Forecast
         </Typography>
         <BasicModal

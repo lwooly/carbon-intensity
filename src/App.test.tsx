@@ -1,18 +1,52 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 
+import { MemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import App from './App';
+import store from './app/store';
 
 describe('App', () => {
-  it('Renders hello world', () => {
-    // Arrange
-    render(<App />);
+  describe('Home page', () => {
+    describe('Title', () => {
+      it('Home page renders title', () => {
+        // Arrange
+        render(
+          <Provider store={store}>
+            <MemoryRouter initialEntries={['/']}>
+              <App />
+            </MemoryRouter>
+          </Provider>
+        );
+        // Act
+        // Expect
 
-    // Act
-    // Expect
+        const title = screen.getByRole('heading', {
+          level: 1,
+        });
 
-    const title = screen.getByTestId('title');
+        expect(title).toHaveTextContent(
+          'Sustainable choices through insight...'
+        );
+      });
+    });
 
-    expect(title).toHaveTextContent('Hello world');
+    it('Renders Not Found if invalid path', () => {
+      // Arrange
+      render(
+        <Provider store={store}>
+          <MemoryRouter initialEntries={['/badRoute']}>
+            <App />
+          </MemoryRouter>
+        </Provider>
+      );
+      // Act
+
+      // Assert
+      const heading = screen.getByRole('heading', {
+        level: 1,
+      });
+      expect(heading).toHaveTextContent('Page not found');
+    });
   });
 });

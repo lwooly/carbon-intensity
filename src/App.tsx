@@ -4,11 +4,12 @@ import {
   ThemeProvider,
   responsiveFontSizes,
 } from '@mui/material';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Home from './pages/Home';
 import Layout from './features/layout/Layout';
 import { renderTheme } from './app/theme';
+import NotFound from './components/NotFound';
 
 function App() {
   const isDark = useSelector((state) => state.appStyles.darkMode);
@@ -19,16 +20,14 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Router>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route path="/" index element={<Home />} />
-          </Route>
-        </Routes>
-      </Router>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="/" index element={<Home />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
     </ThemeProvider>
   );
-  // return <h1 data-testid="title">Hello world</h1>;
 }
 
 export default App;
