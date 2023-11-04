@@ -46,9 +46,11 @@ export const fetchUserLocationAndPostcode = createAsyncThunk(
       `https://api.postcodes.io/postcodes?lon=${longitude}&lat=${latitude}`
     );
     const postcode = await response.json();
+    console.log(postcode.result[0].postcode.split(' ')[0]);
     return postcode.result[0].postcode.split(' ')[0];
   }
 );
+
 const regionalSlice = createSlice({
   name: 'regionalForecast',
   initialState: {
