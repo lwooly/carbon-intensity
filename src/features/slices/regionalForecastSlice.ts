@@ -11,6 +11,8 @@ export const fetchRegionalData = createAsyncThunk(
     );
     const data = await response.json();
 
+    console.log(data, 'save for test data')
+
     // delay for testing
     // await new Promise(resolve => setTimeout(resolve, 2000))
     return data;

@@ -1,13 +1,18 @@
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { describe, it, vi } from 'vitest';
+import { afterAll, afterEach, beforeAll, describe, it, vi, expect } from 'vitest';
 import { Home } from '@mui/icons-material';
 import { http, HttpResponse, delay } from 'msw';
-import { setupServer } from 'msw/node'
+import { setupServer } from 'msw/node';
 import store from '../app/store';
+import { forecastTest24hr } from '../test/forecastTest24hr';
+import moment from 'moment';
 
 const latitude = 51.501364;
 const longitude = -0.14189;
+const postcode = 'SW1A';
+const area = 'London';
+const currentDateTime = moment().utc().format('YYYY-MM-DDTHH:mm[Z]');
 
 // mock geolocation API - not a network request
 vi.stubGlobal('navigator', {
@@ -32,22 +37,54 @@ export const handlers = [
     `https://api.postcodes.io/postcodes?lon=${longitude}&lat=${latitude}`,
     async () => {
       await delay(150);
-      return HttpResponse.json('SW1A');
+      console.log('called')
+      return HttpResponse.json(postcode);
+    }
+  ),
+  // Mock the HTTP request to api to determine which post code is within each region
+  http.get(
+    `https://api.carbonintensity.org.uk/regional/postcode/${postcode}`,
+    async () => {
+      await delay(150);
+      return HttpResponse.json(area);
+    }
+  ),
+  // Mock the forecast api for current datetime
+  // get current date time here to remove requirement to update existing code.
+  http.get(
+    `https://api.carbonintensity.org.uk/regional/intensity/${currentDateTime}/fw24h`,
+    async () => {
+      await delay(150);
+      // always return same data regardless of time for testing.
+      return HttpResponse.json(forecastTest24hr);
     }
   ),
 ];
 
-//set up msw server
-const server = setupServer(...handlers
+// set up msw server
+const server = setupServer(...handlers);
 
-)
+beforeAll(() => {
+  server.listen();
+});
+
+afterEach(() => {
+  server.resetHandlers();
+});
+
+afterAll(() => {
+  server.close();
+});
 
 describe('Home page intergration tests', () => {
-  it('updates store and renders forcast widget correctly', () => {
+  it('renders svg', () => {
     render(
       <Provider store={store}>
         <Home />
       </Provider>
     );
+    
+    const southEnglandRegion = screen.getByTestId('south-england-path');
+    expect(southEnglandRegion).toHaveStyle('fill:hsla(54, 100%, 71%, 1.0)');
   });
 });
