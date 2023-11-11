@@ -1,12 +1,11 @@
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import EnergyMixChart from './EnergyMixChart';
 import { Dispatch, SetStateAction } from 'react';
 
 interface BasicPopoverProps {
     anchorEl: SVGPathElement,
-    setAnchorEl: Dispatch<SetStateAction<SVGPathElement>>
+    setAnchorEl: Dispatch<SetStateAction<SVGPathElement | null>> 
 }
 
 
@@ -15,8 +14,6 @@ const BasicPopover:React.FC<BasicPopoverProps> = ({anchorEl, setAnchorEl}) => {
 //   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 //     setAnchorEl(event.currentTarget);
 //   };
-
-console.log(anchorEl?.id)
 
   const handleClose = () => {
     setAnchorEl(null);

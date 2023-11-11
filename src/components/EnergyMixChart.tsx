@@ -1,5 +1,7 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
+import { useSelector } from 'react-redux';
+import { RootState } from '../app/store';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -7,7 +9,23 @@ interface EnergyMixChartProps {
     svgPath: SVGPathElement
 }
 
+
+
 const EnergyMixChart:React.FC<EnergyMixChartProps> = ({svgPath}) => {
+
+//fetch energy mix from state for the current time as shown on the map. - this could get updated to include the time etc.
+console.log(svgPath?.id)
+
+interface EnergyMix {
+    data: [],
+    status: string,
+    error: null | string
+}
+
+const regionEnergyMix: Array = useSelector( (state:RootState) => state.regionalForecast)
+
+console.log(regionEnergyMix, `regionalEnergyMix`)
+
 const data = {
     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
     datasets: [
@@ -38,6 +56,7 @@ const data = {
 
     return (
         <div>
+            (regionalEn)
             <Doughnut data={data} />
         </div>
     );
