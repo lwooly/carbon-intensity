@@ -4,8 +4,8 @@ import CircularIndeterminate from './CircularIndeterminate';
 import { intensityColors } from '../features/regionalData/regionalDataFns';
 
 function HourForecastCard({ values, status }) {
-  console.log(values, ` value to forecast card`);
-  console.log(status, `status`);
+  // console.log(values, ` value to forecast card`);
+  // console.log(status, `status`);
 
   let from;
   let forecast;

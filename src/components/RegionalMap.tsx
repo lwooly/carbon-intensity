@@ -1,12 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box, Paper, Typography } from '@mui/material';
+import { Box, Paper, Popover, Typography } from '@mui/material';
 import {
   selectAllRegionalData,
   addSearchArea,
 } from '../features/slices/regionalForecastSlice';
 import { svgIntensityColors } from '../features/regionalData/regionalDataFns';
 import CircularIndeterminate from './CircularIndeterminate';
+import BasicPopover from './Popover';
 
 const lightenIntensityColors = (svgColors) => {
   const lightColors = {};
@@ -20,6 +21,8 @@ const lightenIntensityColors = (svgColors) => {
 
   return lightColors;
 };
+
+
 
 function RegionalMap() {
   const dispatch = useDispatch();
@@ -46,8 +49,21 @@ function RegionalMap() {
     (state) => state.regionalForecast.error
   );
 
+    // raised state to manage popover for path buttons
+    const [anchorEl, setAnchorEl] = useState<SVGPathElement | null>(null);
+
+
+  //handle click on map region
+  const handleClick = (event, regionId) => {
+    dispatch(addSearchArea(regionId))
+    console.log(`click handled successfully`)
+    setAnchorEl(event.currentTarget)
+  }
+
   // ref svg file to get path elements
   const svgRef = useRef(null);
+
+
 
   // rerender on change in store data
   useEffect(() => {
@@ -66,7 +82,7 @@ function RegionalMap() {
           const regionId = path.id;
           const originalFillColour = svgColors[regionId];
           path.style.fill = originalFillColour;
-          path.onclick = () => dispatch(addSearchArea(regionId));
+          path.onclick = (event) => handleClick(event, regionId);
           path.onmouseover = () => (path.style.fill = lightSvgColors[regionId]);
           path.onmouseleave = () => (path.style.fill = originalFillColour);
           path.role = "button"
@@ -90,7 +106,7 @@ function RegionalMap() {
             <CircularIndeterminate />
           </Box>
         )}
-
+      
         <svg
           ref={svgRef}
           role="img"
@@ -162,6 +178,7 @@ function RegionalMap() {
             />
           </g>
         </svg>
+        <BasicPopover anchorEl={anchorEl} setAnchorEl={setAnchorEl}/>
       </Paper>
       {regionalErrorState && (
         <Typography>API error: {regionalErrorState}</Typography>
