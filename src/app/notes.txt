@@ -1,0 +1,7 @@
+user form
+how many hours of charging
+select item type for typical charge - could
+work out best continuous time slot - net carbon for charge 
+bonus - work out for charging at worst time
+Unplug - plug in image
+Average household consumption - household energy etc.

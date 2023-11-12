@@ -1,7 +1,8 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import moment from 'moment';
+import { RegionData, RegionalForecastState } from '../../types/RegionalForecast.types';
 
-export const fetchRegionalData = createAsyncThunk(
+export const fetchRegionalData = createAsyncThunk<RegionData>(
   'regionalForecast/fetchRegional',
   async () => {
     // new - fetch 24hr for all gb regions.
@@ -11,7 +12,7 @@ export const fetchRegionalData = createAsyncThunk(
     );
     const data = await response.json();
 
-    console.log(data, 'save for test data')
+    // console.log(data, 'save for test data');
 
     // delay for testing
     // await new Promise(resolve => setTimeout(resolve, 2000))
@@ -53,25 +54,28 @@ export const fetchUserLocationAndPostcode = createAsyncThunk(
   }
 );
 
-const regionalSlice = createSlice({
-  name: 'regionalForecast',
-  initialState: {
-    regionData: {},
+const initialState: RegionalForecastState = {
+  regionData: {
+    data: [],
+  },
+  status: 'idle',
+  error: null,
+  searchArea: {
+    regionId: 18, // need to map this better to prevent bugs
+    regionName: 'GB',
     status: 'idle',
     error: null,
-    searchArea: {
-      regionId: 18, // need to map this better to prevent bugs
-      regionName: 'GB',
-      status: 'idle',
-      error: null,
-    },
-    userLocation: {
-      postcode: '',
-      status: 'idle',
-      error: null,
-    },
   },
+  userLocation: {
+    postcode: '',
+    status: 'idle',
+    error: null,
+  },
+};
 
+const regionalSlice = createSlice({
+  name: 'regionalForecast',
+  initialState,
   reducers: {
     addSearchArea(state, action) {
       state.searchArea.regionName = action.payload;
@@ -83,10 +87,13 @@ const regionalSlice = createSlice({
       .addCase(fetchRegionalData.pending, (state, action) => {
         state.status = 'loading';
       })
-      .addCase(fetchRegionalData.fulfilled, (state, action) => {
-        state.regionData = action.payload;
-        state.status = 'loaded';
-      })
+      .addCase(
+        fetchRegionalData.fulfilled,
+        (state, action: PayloadAction<RegionData>) => {
+          state.regionData = action.payload;
+          state.status = 'loaded';
+        }
+      )
       .addCase(fetchRegionalData.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;

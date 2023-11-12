@@ -1,32 +1,29 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { useSelector } from 'react-redux';
+import { current } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
+import { ForecastData } from '../types/RegionalForecast.types';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-interface EnergyMixChartProps {
-    svgPath: SVGPathElement
+export interface EnergyMixChartProps {
+  svgPath: SVGPathElement;
 }
 
+// eslint-disable-next-line react/function-component-definition
+const EnergyMixChart: React.FC<EnergyMixChartProps> = ({ svgPath }) => {
+  // fetch energy mix from state for the current time as shown on the map. - this could get updated to include the time etc.
+  console.log(svgPath?.id);
 
+  const regionEnergyMix = useSelector((state: RootState) => {
+    const currentForecast = state.regionalForecast.regionData.data[0];
+    console.log(currentForecast, `current forecast`);
+  });
 
-const EnergyMixChart:React.FC<EnergyMixChartProps> = ({svgPath}) => {
+  console.log(regionEnergyMix, `regionalEnergyMix`);
 
-//fetch energy mix from state for the current time as shown on the map. - this could get updated to include the time etc.
-console.log(svgPath?.id)
-
-interface EnergyMix {
-    data: [],
-    status: string,
-    error: null | string
-}
-
-const regionEnergyMix: Array = useSelector( (state:RootState) => state.regionalForecast)
-
-console.log(regionEnergyMix, `regionalEnergyMix`)
-
-const data = {
+  const data = {
     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
     datasets: [
       {
@@ -53,13 +50,11 @@ const data = {
     ],
   };
 
-
-    return (
-        <div>
-            (regionalEn)
-            <Doughnut data={data} />
-        </div>
-    );
+  return (
+    <div>
+      <Doughnut data={data} />
+    </div>
+  );
 };
 
 export default EnergyMixChart;

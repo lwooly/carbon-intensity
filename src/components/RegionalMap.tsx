@@ -8,6 +8,7 @@ import {
 import { svgIntensityColors } from '../features/regionalData/regionalDataFns';
 import CircularIndeterminate from './CircularIndeterminate';
 import BasicPopover from './Popover';
+import { RootState } from '../app/store';
 
 const lightenIntensityColors = (svgColors) => {
   const lightColors = {};
@@ -22,13 +23,11 @@ const lightenIntensityColors = (svgColors) => {
   return lightColors;
 };
 
-
-
 function RegionalMap() {
   const dispatch = useDispatch();
   // use regional intensity data to colour map svg
   const regionalDataState = useSelector(
-    (state) => state.regionalForecast.status
+    (state: RootState) => state.regionalForecast.status
   );
 
   // get regional data from redux store
@@ -46,24 +45,21 @@ function RegionalMap() {
 
   // loaded error state from redux store
   const regionalErrorState = useSelector(
-    (state) => state.regionalForecast.error
+    (state: RootState) => state.regionalForecast.error
   );
 
-    // raised state to manage popover for path buttons
-    const [anchorEl, setAnchorEl] = useState<SVGPathElement | null>(null);
+  // raised state to manage popover for path buttons
+  const [anchorEl, setAnchorEl] = useState<SVGPathElement | null>(null);
 
-
-  //handle click on map region
+  // handle click on map region
   const handleClick = (event, regionId) => {
-    dispatch(addSearchArea(regionId))
-    console.log(`click handled successfully`)
-    setAnchorEl(event.currentTarget)
-  }
+    dispatch(addSearchArea(regionId));
+    console.log(`click handled successfully`);
+    setAnchorEl(event.currentTarget);
+  };
 
   // ref svg file to get path elements
   const svgRef = useRef(null);
-
-
 
   // rerender on change in store data
   useEffect(() => {
@@ -85,7 +81,7 @@ function RegionalMap() {
           path.onclick = (event) => handleClick(event, regionId);
           path.onmouseover = () => (path.style.fill = lightSvgColors[regionId]);
           path.onmouseleave = () => (path.style.fill = originalFillColour);
-          path.role = "button"
+          path.role = 'button';
         });
       }
     }
@@ -106,7 +102,7 @@ function RegionalMap() {
             <CircularIndeterminate />
           </Box>
         )}
-      
+
         <svg
           ref={svgRef}
           role="img"
@@ -178,7 +174,7 @@ function RegionalMap() {
             />
           </g>
         </svg>
-        <BasicPopover anchorEl={anchorEl} setAnchorEl={setAnchorEl}/>
+        <BasicPopover anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
       </Paper>
       {regionalErrorState && (
         <Typography>API error: {regionalErrorState}</Typography>
