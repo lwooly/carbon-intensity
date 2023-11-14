@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Paper,
   Card,
@@ -19,8 +19,6 @@ function ForecastCarousel({ values, status, location }) {
   const theme = useTheme();
   const [energyMixCardIndex, setEnergyMixCardIndex] = useState(null);
 
-  console.log(values, values);
-
   // number of cards to show
   const cardsNum = 6;
   // save state of value indexs to display in the carousel.
@@ -28,12 +26,20 @@ function ForecastCarousel({ values, status, location }) {
     Array.from({ length: cardsNum }, (_, i) => i)
   );
 
-  // handle click on hour bar to show energy mix data for that hour
+  // handle click on hour bar to show energy mix data chart for that hour
   const handleBarClick = (cardIndex) => {
-    console.log(`handled click`);
-    console.log(cardIndex, `card Index`);
-    setEnergyMixCardIndex(cardIndex);
+    if (energyMixCardIndex === null) {
+      setEnergyMixCardIndex(cardIndex);
+    } else {
+      setEnergyMixCardIndex(null)
   };
+}
+
+  useEffect(() => {
+    if (energyMixCardIndex!== null) {
+      setEnergyMixCardIndex(null)
+    }
+  },[values, location])
 
   // create card data
   const cards = values.map((hourData, i) => {
@@ -46,9 +52,6 @@ function ForecastCarousel({ values, status, location }) {
       />
     );
   });
-
-  console.log(cards[energyMixCardIndex], 'cards')
-  console.log(cards)
 
   // handle click on buttons to show the correct cards in the carousel.
   const handleClick = (event) => {
@@ -107,7 +110,7 @@ function ForecastCarousel({ values, status, location }) {
         {/* show the correct cards in the carousel */}
         {energyMixCardIndex === null && cardIndexs.map((cardIndex) => cards[cardIndex])}
         {energyMixCardIndex !== null && cards[energyMixCardIndex]}
-      {energyMixCardIndex !== null && <EnergyMixChart/>}
+      {energyMixCardIndex !== null && <EnergyMixChart mixData={values[energyMixCardIndex]}/>}
       </List>
       <Box sx={{ display: 'flex' }}>
         <MobileStepper

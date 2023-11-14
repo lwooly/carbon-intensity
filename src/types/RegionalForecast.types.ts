@@ -8,18 +8,20 @@ export interface Intensity {
   index: string;
 }
 
-export interface Regions {
-  dnoregion: string;
-  generationmix: GenerationMix[];
-  intensity: Intensity;
-  regionid: number;
-  shortname: string;
+export interface Region {
+  forecast: {
+    dnoregion: string;
+    generationmix: GenerationMix[];
+    intensity: Intensity;
+    regionid: number;
+    shortname: string;
+  };
 }
 
 export interface Data {
   from: string;
   to: string;
-  regions: Regions[];
+  regions: Region[];
 }
 
 export interface RegionData {

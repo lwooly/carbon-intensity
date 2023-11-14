@@ -1,36 +1,38 @@
-/* eslint-disable react/function-component-definition */
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { useSelector } from 'react-redux';
 import { current } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
-import { ForecastData } from '../types/RegionalForecast.types';
+import { ForecastData, Region } from '../types/RegionalForecast.types';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export interface EnergyMixChartProps {
-  svgPath: SVGPathElement;
+  mixData: Region;
 }
 
 // eslint-disable-next-line react/function-component-definition
-// const EnergyMixChart: React.FC<EnergyMixChartProps> = () => {
-const EnergyMixChart = () => {
+const EnergyMixChart: React.FC<EnergyMixChartProps> = ({ mixData }) => {
+  console.log(mixData, 'mix data');
   // fetch energy mix from state for the current time as shown on the map. - this could get updated to include the time etc.
   // console.log(svgPath?.id);
 
-  const regionEnergyMix = useSelector((state: RootState) => {
-    const currentForecast = state.regionalForecast.regionData.data[0];
-    console.log(currentForecast, `current forecast`);
-  });
+  // const regionEnergyMix = useSelector((state: RootState) => {
+  //   const currentForecast = state.regionalForecast.regionData.data[0];
+  //   console.log(currentForecast, `current forecast`);
+  // });
 
-  console.log(regionEnergyMix, `regionalEnergyMix`);
+  const generationMix = mixData.forecast.generationmix;
+
+  const labels = generationMix.map((fuel) => fuel.fuel);
+  const fuelPerc = generationMix.map((fuel) => fuel.perc);
 
   const data = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    labels,
     datasets: [
       {
         label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
+        data: fuelPerc,
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
