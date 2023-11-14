@@ -1,9 +1,9 @@
 import { Card, ListItem, Typography, Box } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import CircularIndeterminate from './CircularIndeterminate';
 import { intensityColors } from '../features/regionalData/regionalDataFns';
 
-function HourForecastCard({ values, status }) {
+function HourForecastCard({ values, status, handleClick }) {
   // console.log(values, ` value to forecast card`);
   // console.log(status, `status`);
 
@@ -17,7 +17,7 @@ function HourForecastCard({ values, status }) {
     index = values.forecast.intensity.index;
   }
 
-  // present time data
+  // time data HH:MM format
   const datetime = new Date(from);
   const time = datetime.toLocaleTimeString([], {
     hour: '2-digit',
@@ -31,25 +31,11 @@ function HourForecastCard({ values, status }) {
   const barPerc = `${barLength}%`;
 
   // determine bar colours
-
   const barColour: string = intensityColors[index];
-  // let barColor = '';
-  // if (forecast < 40) {
-
-  // } elif (forecast >= 40 && forecast < 120) {
-
-  // } elif (forecast >= 120 && forecast < 200) {
-
-  // } elif (forecast >= 120 && forecast < 200) {
-
-  // }elif (forecast >= 200 && forecast < 290) {
-
-  // } else {
-
-  // }
 
   return (
     <ListItem
+      onClick={handleClick}
       sx={{
         position: 'relative',
         alignItems: 'center',

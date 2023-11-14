@@ -13,9 +13,13 @@ import InfoIcon from '@mui/icons-material/Info';
 import { LocalConvenienceStoreOutlined } from '@mui/icons-material';
 import BasicModal from './BasicModal';
 import HourForecastCard from './HourForecastCard';
+import EnergyMixChart from './EnergyMixChart';
 
 function ForecastCarousel({ values, status, location }) {
   const theme = useTheme();
+  const [energyMixCardIndex, setEnergyMixCardIndex] = useState(null);
+
+  console.log(values, values);
 
   // number of cards to show
   const cardsNum = 6;
@@ -24,12 +28,29 @@ function ForecastCarousel({ values, status, location }) {
     Array.from({ length: cardsNum }, (_, i) => i)
   );
 
-  // create card data
+  // handle click on hour bar to show energy mix data for that hour
+  const handleBarClick = (cardIndex) => {
+    console.log(`handled click`);
+    console.log(cardIndex, `card Index`);
+    setEnergyMixCardIndex(cardIndex);
+  };
 
+  // create card data
   const cards = values.map((hourData, i) => {
-    return <HourForecastCard key={i} values={hourData} status={status} />;
+    return (
+      <HourForecastCard
+        key={i}
+        values={hourData}
+        status={status}
+        handleClick={() => handleBarClick(i)}
+      />
+    );
   });
 
+  console.log(cards[energyMixCardIndex], 'cards')
+  console.log(cards)
+
+  // handle click on buttons to show the correct cards in the carousel.
   const handleClick = (event) => {
     const action = event.target.getAttribute('data-action');
     let n = 0;
@@ -44,6 +65,8 @@ function ForecastCarousel({ values, status, location }) {
     });
     setCardIndexs(newCardIndexs);
   };
+
+  // modal info
   const modalTitle = 'Carbon Intensity Forcast Information';
   const modalDescriptiveText =
     'The "carbon intensity" of electricity is a measure of how many grams of carbon dioxide (CO2) emissions are produced for every kilowatt-hour of electricity consumed. This number will be higher when a significant amount of coal or gas is being used and lower when more renewables (like wind or solar) or nuclear energy are being used.';
@@ -81,7 +104,10 @@ function ForecastCarousel({ values, status, location }) {
           md: { flexDirection: 'row' },
         }}
       >
-        {cardIndexs.map((cardIndex) => cards[cardIndex])}
+        {/* show the correct cards in the carousel */}
+        {energyMixCardIndex === null && cardIndexs.map((cardIndex) => cards[cardIndex])}
+        {energyMixCardIndex !== null && cards[energyMixCardIndex]}
+      {energyMixCardIndex !== null && <EnergyMixChart/>}
       </List>
       <Box sx={{ display: 'flex' }}>
         <MobileStepper
@@ -95,7 +121,7 @@ function ForecastCarousel({ values, status, location }) {
               variant="outlined"
               data-action="previous"
               onClick={handleClick}
-              disabled={cardIndexs[0] < 1}
+              disabled={cardIndexs[0] < 1 || energyMixCardIndex !== null}
             >
               Previous
             </Button>
@@ -105,7 +131,7 @@ function ForecastCarousel({ values, status, location }) {
               variant="outlined"
               data-action="next"
               onClick={handleClick}
-              disabled={cardIndexs[0] > cards.length - cardIndexs.length - 1}
+              disabled={cardIndexs[0] > cards.length - cardIndexs.length - 1 || energyMixCardIndex !== null}
             >
               Next
             </Button>

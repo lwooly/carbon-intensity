@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { useSelector } from 'react-redux';
@@ -12,9 +13,10 @@ export interface EnergyMixChartProps {
 }
 
 // eslint-disable-next-line react/function-component-definition
-const EnergyMixChart: React.FC<EnergyMixChartProps> = ({ svgPath }) => {
+// const EnergyMixChart: React.FC<EnergyMixChartProps> = () => {
+const EnergyMixChart = () => {
   // fetch energy mix from state for the current time as shown on the map. - this could get updated to include the time etc.
-  console.log(svgPath?.id);
+  // console.log(svgPath?.id);
 
   const regionEnergyMix = useSelector((state: RootState) => {
     const currentForecast = state.regionalForecast.regionData.data[0];
