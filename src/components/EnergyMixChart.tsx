@@ -2,10 +2,10 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { useSelector } from 'react-redux';
 import { current } from '@reduxjs/toolkit';
-import { RootState } from '../app/store';
-import { ForecastData, Region } from '../types/RegionalForecast.types';
 import { Box } from '@mui/material';
 import { Height } from '@mui/icons-material';
+import { RootState } from '../app/store';
+import { ForecastData, Region } from '../types/RegionalForecast.types';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -15,6 +15,12 @@ export interface EnergyMixChartProps {
 
 // eslint-disable-next-line react/function-component-definition
 const EnergyMixChart: React.FC<EnergyMixChartProps> = ({ mixData }) => {
+
+  // check if forecast data has been provided. If not return empty.
+if (!mixData) {
+  console.log('no data')
+  return
+}
   // set chart data
   const generationMix = mixData.forecast.generationmix;
   const labels = generationMix.map((fuel) => fuel.fuel);
@@ -54,9 +60,7 @@ const EnergyMixChart: React.FC<EnergyMixChartProps> = ({ mixData }) => {
     ],
   };
 
-  return (
-      <Doughnut data={data} />
-  );
+  return <Doughnut data={data} />;
 };
 
 export default EnergyMixChart;

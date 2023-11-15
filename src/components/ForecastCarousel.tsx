@@ -35,6 +35,7 @@ function ForecastCarousel({ values, status, location }) {
     }
   };
 
+  //close chart if data or user location updates.
   useEffect(() => {
     if (energyMixCardIndex !== null) {
       setEnergyMixCardIndex(null);

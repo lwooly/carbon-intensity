@@ -55,8 +55,18 @@ function RegionalMap() {
   const handleClick = (event, regionId) => {
     dispatch(addSearchArea(regionId));
     console.log(`click handled successfully`);
-    setAnchorEl(event.currentTarget);
   };
+
+  // handle hover on region
+  const handleMouseOver = (event, path) => {
+    path.style.fill = lightSvgColors[regionId]
+    setAnchorEl(event.currentTarget);
+  }
+
+  const handleMouseLeave = (event, path) => {
+    path.style.fill = originalFillColo
+    setAnchorEl(event.currentTarget);
+  }
 
   // ref svg file to get path elements
   const svgRef = useRef(null);
@@ -79,7 +89,7 @@ function RegionalMap() {
           const originalFillColour = svgColors[regionId];
           path.style.fill = originalFillColour;
           path.onclick = (event) => handleClick(event, regionId);
-          path.onmouseover = () => (path.style.fill = lightSvgColors[regionId]);
+          path.onmouseover = (event) => handleMouseOver(event, path);
           path.onmouseleave = () => (path.style.fill = originalFillColour);
           path.role = 'button';
         });
