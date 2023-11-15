@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Paper,
   Card,
@@ -31,15 +31,15 @@ function ForecastCarousel({ values, status, location }) {
     if (energyMixCardIndex === null) {
       setEnergyMixCardIndex(cardIndex);
     } else {
-      setEnergyMixCardIndex(null)
+      setEnergyMixCardIndex(null);
+    }
   };
-}
 
   useEffect(() => {
-    if (energyMixCardIndex!== null) {
-      setEnergyMixCardIndex(null)
+    if (energyMixCardIndex !== null) {
+      setEnergyMixCardIndex(null);
     }
-  },[values, location])
+  }, [values, location]);
 
   // create card data
   const cards = values.map((hourData, i) => {
@@ -68,6 +68,15 @@ function ForecastCarousel({ values, status, location }) {
     });
     setCardIndexs(newCardIndexs);
   };
+
+  // determine height of list component to maintain size
+
+  // const listHeight = () => {
+  //   const cardHeight = 14
+  //   const cardGap = 2
+  //   const padding = 8
+  //  return  (padding + cardsNum * cardHeight + (cardsNum -1) * cardGap) * 4
+  // }
 
   // modal info
   const modalTitle = 'Carbon Intensity Forcast Information';
@@ -105,12 +114,17 @@ function ForecastCarousel({ values, status, location }) {
           borderRadius: 0.5,
           border: 'solid 1px black',
           md: { flexDirection: 'row' },
+          height: 410,
+          overflow: 'hidden'
         }}
       >
         {/* show the correct cards in the carousel */}
-        {energyMixCardIndex === null && cardIndexs.map((cardIndex) => cards[cardIndex])}
+        {energyMixCardIndex === null &&
+          cardIndexs.map((cardIndex) => cards[cardIndex])}
         {energyMixCardIndex !== null && cards[energyMixCardIndex]}
-      {energyMixCardIndex !== null && <EnergyMixChart mixData={values[energyMixCardIndex]}/>}
+        {energyMixCardIndex !== null && (
+          <EnergyMixChart mixData={values[energyMixCardIndex]} />
+        )}
       </List>
       <Box sx={{ display: 'flex' }}>
         <MobileStepper
@@ -134,7 +148,10 @@ function ForecastCarousel({ values, status, location }) {
               variant="outlined"
               data-action="next"
               onClick={handleClick}
-              disabled={cardIndexs[0] > cards.length - cardIndexs.length - 1 || energyMixCardIndex !== null}
+              disabled={
+                cardIndexs[0] > cards.length - cardIndexs.length - 1 ||
+                energyMixCardIndex !== null
+              }
             >
               Next
             </Button>

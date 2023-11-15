@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { current } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
 import { ForecastData, Region } from '../types/RegionalForecast.types';
+import { Box } from '@mui/material';
+import { Height } from '@mui/icons-material';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -13,22 +15,20 @@ export interface EnergyMixChartProps {
 
 // eslint-disable-next-line react/function-component-definition
 const EnergyMixChart: React.FC<EnergyMixChartProps> = ({ mixData }) => {
-  console.log(mixData, 'mix data');
-  // fetch energy mix from state for the current time as shown on the map. - this could get updated to include the time etc.
-  // console.log(svgPath?.id);
-
-  // const regionEnergyMix = useSelector((state: RootState) => {
-  //   const currentForecast = state.regionalForecast.regionData.data[0];
-  //   console.log(currentForecast, `current forecast`);
-  // });
-
+  // set chart data
   const generationMix = mixData.forecast.generationmix;
-
   const labels = generationMix.map((fuel) => fuel.fuel);
   const fuelPerc = generationMix.map((fuel) => fuel.perc);
 
+  // configure chart options
+  const options = {
+    responsive: true,
+    maintainAspectRatio: true,
+  };
+
   const data = {
     labels,
+    options,
     datasets: [
       {
         label: '# of Votes',
@@ -55,9 +55,7 @@ const EnergyMixChart: React.FC<EnergyMixChartProps> = ({ mixData }) => {
   };
 
   return (
-    <div>
       <Doughnut data={data} />
-    </div>
   );
 };
 
