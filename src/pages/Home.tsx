@@ -62,7 +62,7 @@ function Home() {
       sx={{ p: 1, maxWidth: '100%', overflow: 'hidden' }}
     >
       <Grid item md={8}>
-        <Box sx={{ mb: { xs: 1, md: 0 } }}>
+        <Box sx={{ mb: { xs: 1, md: 1 } }}>
           <HomeTitle />
         </Box>
         <ForecastWidget />

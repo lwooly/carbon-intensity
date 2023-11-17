@@ -126,11 +126,15 @@ function ForecastCarousel({ values, status, location }) {
           cardIndexs.map((cardIndex) => cards[cardIndex])}
         {energyMixCardIndex !== null && cards[energyMixCardIndex]}
         {energyMixCardIndex !== null && (
-          <Box>
-            <EnergyMixChart mixData={values[energyMixCardIndex]} />
-            <IconButton>
+          <Box sx={{ height: '100%', display: 'flex' }}>
+            <Box sx={{flexGrow:1, justifyContent:'center', display:'flex'}}>
+              <EnergyMixChart mixData={values[energyMixCardIndex]} />
+            </Box>
+            <Box sx={{display:'flex', alignItems:'start'}}>
+            <IconButton onClick={() => setEnergyMixCardIndex(null)}>
               <HighlightOffTwoToneIcon />
             </IconButton>
+            </Box>
           </Box>
         )}
       </List>
