@@ -18,7 +18,6 @@ const EnergyMixChart: React.FC<EnergyMixChartProps> = ({ mixData }) => {
 
   // check if forecast data has been provided. If not return empty.
 if (!mixData) {
-  console.log('no data')
   return
 }
   // set chart data

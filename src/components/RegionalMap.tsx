@@ -12,13 +12,10 @@ import { RootState } from '../app/store';
 
 const lightenIntensityColors = (svgColors) => {
   const lightColors = {};
-  //   console.log(Array.from(Object.entries(svgColors)))
   const tempArr = Array.from(Object.entries(svgColors));
   tempArr.map((keyValue) => {
     lightColors[keyValue[0]] = `${keyValue[1].slice(0, -6)}, 0.5)`;
   });
-
-  console.log(lightColors, `light colours`);
 
   return lightColors;
 };
@@ -33,7 +30,6 @@ function RegionalMap() {
   // get regional data from redux store
   const regionalData24hr = useSelector(selectAllRegionalData);
 
-  // console.log(selectAllRegionalData, `select all`)
 
   let currentRegionalData;
   if (regionalDataState === 'loaded') {
@@ -51,6 +47,13 @@ function RegionalMap() {
   // raised state to manage popover for path buttons
   const [anchorEl, setAnchorEl] = useState<SVGPathElement | null>(null);
 
+  // state to hold regional map colours
+  const [svgColors, setSvgColors] = useState(null);
+  const [lightSvgColors, setLightSvgColours] = useState(null);
+
+  // state for hovered region
+  const [hoveredRegion, setHoveredRegion] = useState(null)
+
   // handle click on map region
   const handleClick = (event, regionId) => {
     dispatch(addSearchArea(regionId));
@@ -59,14 +62,26 @@ function RegionalMap() {
 
   // handle hover on region
   const handleMouseOver = (event, path) => {
-    path.style.fill = lightSvgColors[regionId]
-    setAnchorEl(event.currentTarget);
-  }
+    console.log('mouse over')
+    if (hoveredRegion !== path.id) {
+      setHoveredRegion(path.id)
+    }
+    
+    // console.log(event.currentTarget)
+    // if (anchorEl !== event.currentTarget) {
+    //   setAnchorEl(event.currentTarget);
+    // }
+  };
 
   const handleMouseLeave = (event, path) => {
-    path.style.fill = originalFillColo
-    setAnchorEl(event.currentTarget);
-  }
+    // path.style.fill = svgColors[path.id];
+    if (hoveredRegion !== null) {
+      setHoveredRegion(null)
+    }
+    // if (anchorEl !== null) {
+    //   setAnchorEl(null);
+    // }
+  };
 
   // ref svg file to get path elements
   const svgRef = useRef(null);
@@ -76,26 +91,34 @@ function RegionalMap() {
     // use ref to get paths from rendered svg element to save editing svg by hand
     const svg = svgRef.current;
     if (svg) {
+
+      //create an array of paths in the document
       const paths = Array.from(svg.querySelectorAll('path'));
 
       if (regionalData?.regions) {
         // get colors to represent each regions intensity data
-        const svgColors = svgIntensityColors(regionalData);
-        const lightSvgColors = lightenIntensityColors(svgColors);
+        setSvgColors(svgIntensityColors(regionalData));
+        if (svgColors) {
+          setLightSvgColours(lightenIntensityColors(svgColors));
 
-        // edit svg path styles
-        paths.map((path) => {
-          const regionId = path.id;
-          const originalFillColour = svgColors[regionId];
-          path.style.fill = originalFillColour;
-          path.onclick = (event) => handleClick(event, regionId);
-          path.onmouseover = (event) => handleMouseOver(event, path);
-          path.onmouseleave = () => (path.style.fill = originalFillColour);
-          path.role = 'button';
-        });
+          // edit svg path styles
+          paths.map((path) => {
+            const regionId = path.id;
+            const originalFillColour = svgColors[regionId];
+            if (hoveredRegion === regionId) {
+              path.style.fill = lightSvgColors[regionId]
+            } else {
+              path.style.fill = svgColors[regionId]
+            }
+            path.onclick = (event) => handleClick(event, regionId);
+            path.onmouseover = (event) => handleMouseOver(event, path);
+            path.onmouseleave = (event) => (handleMouseLeave(event, path));
+            path.role = 'button';
+          });
+        }
       }
     }
-  }, [svgRef, regionalData]);
+  }, [svgRef, regionalData, hoveredRegion]);
 
   return (
     <section className="regional-map">

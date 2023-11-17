@@ -7,10 +7,12 @@ import {
   MobileStepper,
   Typography,
   List,
+  IconButton,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import InfoIcon from '@mui/icons-material/Info';
 import { LocalConvenienceStoreOutlined } from '@mui/icons-material';
+import HighlightOffTwoToneIcon from '@mui/icons-material/HighlightOffTwoTone';
 import BasicModal from './BasicModal';
 import HourForecastCard from './HourForecastCard';
 import EnergyMixChart from './EnergyMixChart';
@@ -35,7 +37,7 @@ function ForecastCarousel({ values, status, location }) {
     }
   };
 
-  //close chart if data or user location updates.
+  // close chart if data or user location updates.
   useEffect(() => {
     if (energyMixCardIndex !== null) {
       setEnergyMixCardIndex(null);
@@ -116,7 +118,7 @@ function ForecastCarousel({ values, status, location }) {
           border: 'solid 1px black',
           md: { flexDirection: 'row' },
           height: 410,
-          overflow: 'hidden'
+          overflow: 'hidden',
         }}
       >
         {/* show the correct cards in the carousel */}
@@ -124,7 +126,12 @@ function ForecastCarousel({ values, status, location }) {
           cardIndexs.map((cardIndex) => cards[cardIndex])}
         {energyMixCardIndex !== null && cards[energyMixCardIndex]}
         {energyMixCardIndex !== null && (
-          <EnergyMixChart mixData={values[energyMixCardIndex]} />
+          <Box>
+            <EnergyMixChart mixData={values[energyMixCardIndex]} />
+            <IconButton>
+              <HighlightOffTwoToneIcon />
+            </IconButton>
+          </Box>
         )}
       </List>
       <Box sx={{ display: 'flex' }}>

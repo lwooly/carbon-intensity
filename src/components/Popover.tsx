@@ -8,10 +8,12 @@ interface BasicPopoverProps {
   setAnchorEl: Dispatch<SetStateAction<SVGPathElement | null>>;
 }
 
+// eslint-disable-next-line react/function-component-definition
 const BasicPopover: React.FC<BasicPopoverProps> = ({
   anchorEl,
   setAnchorEl,
 }) => {
+
   //   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
   //     setAnchorEl(event.currentTarget);
   //   };
@@ -24,21 +26,19 @@ const BasicPopover: React.FC<BasicPopoverProps> = ({
   const id = open ? 'simple-popover' : undefined;
 
   return (
-    <div>
+    ( anchorEl && <div>
       <Popover
         id={id}
         open={open}
         anchorEl={anchorEl}
-        onClose={handleClose}
         anchorOrigin={{
           vertical: 'top',
           horizontal: 'right',
         }}
       >
-        <Typography sx={{ p: 2 }}>Energy Generation Mix</Typography>
-        <EnergyMixChart svgPath={anchorEl} />
+        <Typography sx={{ p: 2 }}>{anchorEl.id}</Typography>
       </Popover>
-    </div>
+    </div>)
   );
 };
 
