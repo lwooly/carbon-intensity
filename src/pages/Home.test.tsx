@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { afterAll, afterEach, beforeAll, describe, it, vi, expect } from 'vitest';
-import { Home } from '@mui/icons-material';
+import { Home } from '@mui/icons-material'; // This needs to be updated to the Home Page
 import { http, HttpResponse, delay } from 'msw';
 import { setupServer } from 'msw/node';
 import store from '../app/store';

@@ -5,22 +5,24 @@ import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import App from './App';
 import store from './app/store';
+import { act } from 'react-dom/test-utils';
 
 describe('App', () => {
   describe('Home page', () => {
     describe('Title', () => {
-      it('Home page renders title', () => {
-        // Arrange
-        render(
-          <Provider store={store}>
-            <MemoryRouter initialEntries={['/']}>
-              <App />
-            </MemoryRouter>
-          </Provider>
-        );
+      it('Home page renders title', async () => {
         // Act
+        await act(() => {
+          // Arrange
+          render(
+            <Provider store={store}>
+              <MemoryRouter initialEntries={['/']}>
+                <App />
+              </MemoryRouter>
+            </Provider>
+          );
+        });
         // Expect
-
         const title = screen.getByRole('heading', {
           level: 1,
         });
