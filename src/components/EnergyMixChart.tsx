@@ -1,24 +1,15 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { useSelector } from 'react-redux';
-import { current } from '@reduxjs/toolkit';
-import { Box } from '@mui/material';
-import { Height } from '@mui/icons-material';
-import { RootState } from '../app/store';
-import { ForecastData, Region } from '../types/RegionalForecast.types';
+import ChartDataLabels, { Context } from 'chartjs-plugin-datalabels';
+import { Region } from '../types/RegionalForecast.types';
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
-export interface EnergyMixChartProps {
-  mixData: Region;
-}
-
 // eslint-disable-next-line react/function-component-definition
-const EnergyMixChart: React.FC<EnergyMixChartProps> = ({ mixData }) => {
+function EnergyMixChart({ mixData }: { mixData: Region }) {
   // check if forecast data has been provided. If not return empty.
   if (!mixData) {
-    return;
+    return null;
   }
   // set chart data
   const generationMix = mixData.forecast.generationmix;
@@ -34,12 +25,14 @@ const EnergyMixChart: React.FC<EnergyMixChartProps> = ({ mixData }) => {
         position: 'right' as const,
       },
       datalabels: {
-        formatter: (value, context) => {
-           const fuel = context.chart.data.labels[context.dataIndex]
+        formatter: (value: number, context: Context) => {
+          const fuel = context.chart.data.labels
+            ? context.chart.data.labels[context.dataIndex]
+            : null;
           if (value < 3) {
-            return ''
+            return '';
           }
-          return `${fuel}:\n${value}%`
+          return `${fuel}:\n${value}%`;
         },
         color: 'black',
       },
@@ -74,6 +67,6 @@ const EnergyMixChart: React.FC<EnergyMixChartProps> = ({ mixData }) => {
   };
 
   return <Doughnut data={data} options={options} />;
-};
+}
 
 export default EnergyMixChart;

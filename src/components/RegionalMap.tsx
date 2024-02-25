@@ -92,7 +92,7 @@ function RegionalMap() {
     const svg = svgRef.current;
     if (svg) {
 
-      //create an array of paths in the document
+      // create an array of paths in the document
       const paths = Array.from(svg.querySelectorAll('path'));
 
       if (regionalData?.regions) {
