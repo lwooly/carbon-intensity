@@ -10,7 +10,9 @@ const store = configureStore({
   },
 });
 
-//define and export root state
+// Define and export root state
 export type RootState = ReturnType<typeof store.getState>;
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch;
 
 export default store;

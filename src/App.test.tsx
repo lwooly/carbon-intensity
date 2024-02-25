@@ -3,9 +3,9 @@ import { describe, it, expect } from 'vitest';
 
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { act } from 'react-dom/test-utils';
 import App from './App';
 import store from './app/store';
-import { act } from 'react-dom/test-utils';
 
 describe('App', () => {
   describe('Home page', () => {

@@ -33,6 +33,8 @@ function HourForecastCard({ values, status, handleClick }) {
   // determine bar colours
   const barColour: string = intensityColors[index];
 
+  console.log(barColour);
+
   return (
     <ListItem
       onClick={handleClick}

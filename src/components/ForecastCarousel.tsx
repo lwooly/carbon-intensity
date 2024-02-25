@@ -1,25 +1,30 @@
-import { useEffect, useRef, useState } from 'react';
-import {
-  Paper,
-  Card,
-  Box,
-  Button,
-  MobileStepper,
-  Typography,
-  List,
-  IconButton,
-} from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import InfoIcon from '@mui/icons-material/Info';
-import { LocalConvenienceStoreOutlined } from '@mui/icons-material';
-import HighlightOffTwoToneIcon from '@mui/icons-material/HighlightOffTwoTone';
-import BasicModal from './BasicModal';
+import { useEffect, useState } from 'react';
+import { nanoid } from '@reduxjs/toolkit';
+import { Card, Box, Typography, List } from '@mui/material';
 import HourForecastCard from './HourForecastCard';
-import EnergyMixChart from './EnergyMixChart';
+import ForecastCarouselModal from './ForecastCarouselModal';
+import CarouselControl from './CarouselControl';
+import ChartBlock from './ChartBlock';
+import structureForcecastFn from '../lib/utils/structureForcecastFn';
+import { useAppSelector } from '../app/hooks';
 
-function ForecastCarousel({ values, status, location }) {
-  const theme = useTheme();
-  const [energyMixCardIndex, setEnergyMixCardIndex] = useState(null);
+function ForecastCarousel() {
+  // const theme = useTheme();
+
+  // get forecast data from redux store
+  const forecastState = useAppSelector((state) => {
+    return state.regionalForecast;
+  });
+
+  // destructure loading and error state for forecast data
+  const { status, error } = forecastState;
+
+  // reformat the forecast data for use in the carosel
+  const { values, location } = structureForcecastFn({ forecastState });
+
+  const [showCardChartIndex, setShowCardChartIndex] = useState<number | null>(
+    null
+  );
 
   // number of cards to show
   const cardsNum = 6;
@@ -29,62 +34,33 @@ function ForecastCarousel({ values, status, location }) {
   );
 
   // handle click on hour bar to show energy mix data chart for that hour
-  const handleBarClick = (cardIndex) => {
-    if (energyMixCardIndex === null) {
-      setEnergyMixCardIndex(cardIndex);
+  const handleBarClick = (cardIndex: number) => {
+    if (showCardChartIndex === null) {
+      setShowCardChartIndex(cardIndex);
     } else {
-      setEnergyMixCardIndex(null);
+      setShowCardChartIndex(null);
     }
   };
 
   // close chart if data or user location updates.
   useEffect(() => {
-    if (energyMixCardIndex !== null) {
-      setEnergyMixCardIndex(null);
+    if (showCardChartIndex !== null) {
+      setShowCardChartIndex(null);
     }
-  }, [values, location]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [values, location]); // closes on open if showCardIndex is included in dependants
 
   // create card data
   const cards = values.map((hourData, i) => {
     return (
       <HourForecastCard
-        key={i}
+        key={nanoid()}
         values={hourData}
         status={status}
         handleClick={() => handleBarClick(i)}
       />
     );
   });
-
-  // handle click on buttons to show the correct cards in the carousel.
-  const handleClick = (event) => {
-    const action = event.target.getAttribute('data-action');
-    let n = 0;
-    if (action === 'next') {
-      n = 1;
-    }
-    if (action === 'previous') {
-      n = -1;
-    }
-    const newCardIndexs = cardIndexs.map((cardIndex) => {
-      return (cardIndex += n);
-    });
-    setCardIndexs(newCardIndexs);
-  };
-
-  // determine height of list component to maintain size
-
-  // const listHeight = () => {
-  //   const cardHeight = 14
-  //   const cardGap = 2
-  //   const padding = 8
-  //  return  (padding + cardsNum * cardHeight + (cardsNum -1) * cardGap) * 4
-  // }
-
-  // modal info
-  const modalTitle = 'Carbon Intensity Forcast Information';
-  const modalDescriptiveText =
-    'The "carbon intensity" of electricity is a measure of how many grams of carbon dioxide (CO2) emissions are produced for every kilowatt-hour of electricity consumed. This number will be higher when a significant amount of coal or gas is being used and lower when more renewables (like wind or solar) or nuclear energy are being used.';
 
   return (
     <Card sx={{ p: 2, width: '100%' }}>
@@ -98,11 +74,7 @@ function ForecastCarousel({ values, status, location }) {
         <Typography variant="h3" component="h2">
           Carbon Intensity Forecast
         </Typography>
-        <BasicModal
-          icon={<InfoIcon />}
-          title={modalTitle}
-          text={modalDescriptiveText}
-        />
+        <ForecastCarouselModal />
       </Box>
       <Typography variant="h6" component="h3">
         Area: {location}
@@ -121,55 +93,26 @@ function ForecastCarousel({ values, status, location }) {
           overflow: 'hidden',
         }}
       >
-        {/* show the correct cards in the carousel */}
-        {energyMixCardIndex === null &&
+        {error && <Typography>API error: {error}</Typography>}
+        {/* show the correct cards in the carousel for the current time range shown */}
+        {showCardChartIndex === null &&
           cardIndexs.map((cardIndex) => cards[cardIndex])}
-        {energyMixCardIndex !== null && cards[energyMixCardIndex]}
-        {energyMixCardIndex !== null && (
-          <Box sx={{ height: '100%', display: 'flex' }}>
-            <Box sx={{flexGrow:1, justifyContent:'center', display:'flex'}}>
-              <EnergyMixChart mixData={values[energyMixCardIndex]} />
-            </Box>
-            <Box sx={{display:'flex', alignItems:'start'}}>
-            <IconButton onClick={() => setEnergyMixCardIndex(null)}>
-              <HighlightOffTwoToneIcon />
-            </IconButton>
-            </Box>
-          </Box>
+        {/* On card click show row (card and relevant energy mix chart  */}
+        {showCardChartIndex !== null && cards[showCardChartIndex]}
+        {showCardChartIndex !== null && (
+          <ChartBlock
+            setShowCardChartIndex={setShowCardChartIndex}
+            showCardChartIndex={showCardChartIndex}
+            chartData={values[showCardChartIndex]}
+          />
         )}
       </List>
-      <Box sx={{ display: 'flex' }}>
-        <MobileStepper
-          variant="progress"
-          steps={cards.length - cardIndexs.length + 1}
-          position="static"
-          activeStep={cardIndexs[0]}
-          sx={{ flexGrow: 1 }}
-          backButton={
-            <Button
-              variant="outlined"
-              data-action="previous"
-              onClick={handleClick}
-              disabled={cardIndexs[0] < 1 || energyMixCardIndex !== null}
-            >
-              Previous
-            </Button>
-          }
-          nextButton={
-            <Button
-              variant="outlined"
-              data-action="next"
-              onClick={handleClick}
-              disabled={
-                cardIndexs[0] > cards.length - cardIndexs.length - 1 ||
-                energyMixCardIndex !== null
-              }
-            >
-              Next
-            </Button>
-          }
-        />
-      </Box>
+      <CarouselControl
+        cardIndexs={cardIndexs}
+        setCardIndexs={setCardIndexs}
+        cardNumber={cards.length}
+        showCardChartIndex={showCardChartIndex}
+      />
     </Card>
   );
 }

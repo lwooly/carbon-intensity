@@ -1,4 +1,8 @@
-export const intensityColors = {
+type IntensityColors = {
+  [key: string]: string;
+};
+
+export const intensityColors: IntensityColors = {
   'very high': 'hsla(0, 77%, 39%, 1.0)',
   high: 'hsla(24, 100%, 47%, 1.0)',
   moderate: 'hsla(54, 100%, 71%, 1.0)',

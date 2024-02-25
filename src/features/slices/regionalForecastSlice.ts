@@ -1,6 +1,10 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import moment from 'moment';
-import { RegionData, RegionalForecastState } from '../../types/RegionalForecast.types';
+import {
+  RegionData,
+  RegionalForecastState,
+} from '../../types/RegionalForecast.types';
+// import { RegionData, RegionalForecastState } from '../../types/RegionalForecast.types';
 
 export const fetchRegionalData = createAsyncThunk<RegionData>(
   'regionalForecast/fetchRegional',

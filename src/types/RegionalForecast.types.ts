@@ -9,13 +9,11 @@ export interface Intensity {
 }
 
 export interface Region {
-  forecast: {
-    dnoregion: string;
-    generationmix: GenerationMix[];
-    intensity: Intensity;
-    regionid: number;
-    shortname: string;
-  };
+  dnoregion: string;
+  generationmix: GenerationMix[];
+  intensity: Intensity;
+  regionid: number;
+  shortname: string;
 }
 
 export interface Data {
