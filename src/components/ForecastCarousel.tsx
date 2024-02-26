@@ -103,7 +103,6 @@ function ForecastCarousel() {
               {cards[showCardChartIndex]}
               <ChartBlock
                 setShowCardChartIndex={setShowCardChartIndex}
-                showCardChartIndex={showCardChartIndex}
                 chartData={values[showCardChartIndex]}
               />
             </>

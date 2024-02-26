@@ -4,14 +4,22 @@ import { useSelector } from 'react-redux';
 import { selectAllStyles } from '../features/slices/stylesSlice';
 
 function HomeTitle() {
-  const { padding } = useSelector(selectAllStyles);
+  const {
+    padding: { xs, sm, md, lg, xl },
+  } = useSelector(selectAllStyles);
 
   return (
     <Paper
       sx={{
         display: 'flex',
         bgcolor: 'secondary.light',
-        p: padding,
+        p: {
+          xs,
+          sm,
+          md,
+          lg,
+          xl,
+        },
         width: '100%',
       }}
     >
