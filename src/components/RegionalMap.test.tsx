@@ -7,12 +7,20 @@ import RegionalMap from './RegionalMap';
 
 import store from '../app/store';
 import regionalForecastReducer, {
-  initialState,
+  initialForecastState,
 } from '../features/slices/regionalForecastSlice';
-import stylesReducer from '../features/slices/stylesSlice';
+import stylesReducer, {
+  initialStylesState,
+} from '../features/slices/stylesSlice';
 import testStoreState from '../test/testState.json';
 
-const makeTestStore = (preloadedState = initialState) => {
+// test store with preloaded data to mock data for testing.
+const makeTestStore = (
+  preloadedState = {
+    regionalForecast: initialForecastState,
+    appStyles: initialStylesState,
+  }
+) => {
   return configureStore({
     reducer: {
       regionalForecast: regionalForecastReducer,

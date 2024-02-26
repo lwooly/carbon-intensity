@@ -25,7 +25,7 @@ function HourForecastCard({
   }
 
   // if from exists create a date. Otherwise create from current time
-  const datetime = from ? new Date(from) : new Date();
+  const datetime = new Date(from);
   const time = datetime.toLocaleTimeString([], {
     hour: '2-digit',
     minute: '2-digit',

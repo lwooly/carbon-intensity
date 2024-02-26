@@ -58,7 +58,7 @@ describe('Hour Forecast Card Unit tests', () => {
 
   const loadedStatus = 'loaded';
 
-  it('should show a time', () => {
+  it('should show the correct time', () => {
     // render
     render(
       <HourForecastCard
@@ -69,22 +69,13 @@ describe('Hour Forecast Card Unit tests', () => {
     );
     // act
     // assert
-    const timeElement = screen.getByText('09:30 PM');
-    expect(timeElement).toBeInTheDocument();
-  });
-
-  it('should show a time', () => {
-    // render
-    render(
-      <HourForecastCard
-        values={mockForecastValue}
-        status={loadedStatus}
-        handleClick={() => {}}
-      />
-    );
-    // act
-    // assert
-    const timeElement = screen.getByText('09:30 PM');
+    const datetime = new Date(mockForecastValue.from);
+    const time = datetime.toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    console.log(time);
+    const timeElement = screen.getByText(time);
     expect(timeElement).toBeInTheDocument();
   });
 

@@ -1,12 +1,21 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { afterAll, afterEach, beforeAll, describe, it, vi, expect } from 'vitest';
-import { Home } from '@mui/icons-material'; // This needs to be updated to the Home Page
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  describe,
+  it,
+  vi,
+  expect,
+} from 'vitest';
+import moment from 'moment';
+
 import { http, HttpResponse, delay } from 'msw';
 import { setupServer } from 'msw/node';
 import store from '../app/store';
 import { forecastTest24hr } from '../test/forecastTest24hr';
-import moment from 'moment';
+import Home from './Home';
 
 const latitude = 51.501364;
 const longitude = -0.14189;
@@ -37,7 +46,6 @@ export const handlers = [
     `https://api.postcodes.io/postcodes?lon=${longitude}&lat=${latitude}`,
     async () => {
       await delay(150);
-      console.log('called')
       return HttpResponse.json(postcode);
     }
   ),
@@ -77,14 +85,30 @@ afterAll(() => {
 });
 
 describe('Home page intergration tests', () => {
-  it('renders svg', () => {
+  it('renders svg', async () => {
     render(
       <Provider store={store}>
         <Home />
       </Provider>
     );
-    
+
     const southEnglandRegion = screen.getByTestId('south-england-path');
-    expect(southEnglandRegion).toHaveStyle('fill:hsla(54, 100%, 71%, 1.0)');
+    // assert
+    expect(southEnglandRegion).toBeInTheDocument();
+  });
+
+  it('styles svg based on redux store data', async () => {
+    render(
+      <Provider store={store}>
+        <Home />
+      </Provider>
+    );
+
+    const southEnglandRegion = screen.getByTestId('south-england-path');
+
+    // assert
+    await waitFor(() => {
+      expect(southEnglandRegion).toHaveStyle('fill:hsla(54, 100%, 71%, 1.0)');
+    });
   });
 });

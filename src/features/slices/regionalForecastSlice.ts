@@ -58,7 +58,7 @@ export const fetchUserLocationAndPostcode = createAsyncThunk(
   }
 );
 
-export const initialState: RegionalForecastState = {
+export const initialForecastState: RegionalForecastState = {
   regionData: {
     data: [],
   },
@@ -79,7 +79,7 @@ export const initialState: RegionalForecastState = {
 
 const regionalSlice = createSlice({
   name: 'regionalForecast',
-  initialState,
+  initialState: initialForecastState,
   reducers: {
     addSearchArea(state, action) {
       state.searchArea.regionName = action.payload;
