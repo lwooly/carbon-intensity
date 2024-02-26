@@ -1,10 +1,23 @@
-import { RegionalForecastState } from '../../types/RegionalForecast.types';
+import {
+  Region,
+  RegionalForecastState,
+} from '../../types/RegionalForecast.types';
 
-const structureForcecastFn = ({
+export interface ForecastDataItem {
+  from: string;
+  to: string;
+  forecast: Region;
+}
+
+export interface StructureForcecastFnReturn {
+  values: (ForecastDataItem | null)[];
+  location: string;
+}
+const structureForecastFn = ({
   forecastState,
 }: {
   forecastState: RegionalForecastState;
-}) => {
+}): StructureForcecastFnReturn => {
   // destructure state
   const {
     searchArea: { regionName },
@@ -19,18 +32,18 @@ const structureForcecastFn = ({
   // Forecast data has an arrray of regional data for all regions every 30 mins.
 
   // set card array to allow for loading spinners to show
-  let cardData = new Array(12).fill('data');
+  let cardData: (ForecastDataItem | null)[] = new Array(12).fill(null);
 
-  let location = '';
+  let location: string = 'Nationwide average';
 
   // check store status and forecast data avaialble
   if (status === 'loaded' && forecastData) {
     // manipulate forecast data to easier to use state for card componenents in an object
     cardData = forecastData
-      // get 12 hour slots - to be refined
+      // get 12 hour slots from the existing data - to be refined
       .filter((_, i) => i % 2 === 0 && i < 23)
 
-      // get specific regional data from the forecast data
+      // get specific regional data from the forecast data for the region defined in the search area.
       .map((hourDataGB) => {
         const regionData = hourDataGB.regions.filter((region) => {
           return region.shortname === regionName;
@@ -44,7 +57,9 @@ const structureForcecastFn = ({
         };
       });
 
-    location = cardData[0].forecast.shortname;
+    if (cardData[0]?.forecast.shortname) {
+      location = cardData[0]?.forecast.shortname;
+    }
 
     if (location === 'GB') {
       location = 'Nationwide average';
@@ -58,4 +73,4 @@ const structureForcecastFn = ({
   };
 };
 
-export default structureForcecastFn;
+export default structureForecastFn;

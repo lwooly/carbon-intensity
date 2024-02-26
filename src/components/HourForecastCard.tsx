@@ -1,24 +1,31 @@
-import { Card, ListItem, Typography, Box } from '@mui/material';
-import React, { useState } from 'react';
+import { ListItem, Typography, Box } from '@mui/material';
 import CircularIndeterminate from './CircularIndeterminate';
 import { intensityColors } from '../features/regionalData/regionalDataFns';
+import { ForecastDataItem } from '../lib/utils/structureForcecastFn';
 
-function HourForecastCard({ values, status, handleClick }) {
-  // console.log(values, ` value to forecast card`);
-  // console.log(status, `status`);
-
-  let from;
+function HourForecastCard({
+  values,
+  status,
+  handleClick,
+}: {
+  values: ForecastDataItem | null;
+  status: string;
+  handleClick: () => void;
+}) {
+  // Initialise variables with default values.
+  let from = '';
   let forecast;
-  let index;
+  let index = '';
 
+  // Check if data is loaded.
   if (status === 'loaded' && values) {
-    from = values.from;
-    forecast = values.forecast.intensity.forecast;
-    index = values.forecast.intensity.index;
+    from = values.from || '';
+    forecast = values?.forecast?.intensity?.forecast;
+    index = values?.forecast?.intensity?.index || '';
   }
 
-  // time data HH:MM format
-  const datetime = new Date(from);
+  // if from exists create a date. Otherwise create from current time
+  const datetime = from ? new Date(from) : new Date();
   const time = datetime.toLocaleTimeString([], {
     hour: '2-digit',
     minute: '2-digit',
@@ -32,8 +39,6 @@ function HourForecastCard({ values, status, handleClick }) {
 
   // determine bar colours
   const barColour: string = intensityColors[index];
-
-  console.log(barColour);
 
   return (
     <ListItem
