@@ -33,7 +33,6 @@ export const fetchAreaFromPostCode = createAsyncThunk(
       `https://api.carbonintensity.org.uk/regional/postcode/${postcode}`
     );
     const data = await response.json();
-    console.log(data.data[0]);
 
     return {
       regionId: data.data[0].regionid,
@@ -55,7 +54,6 @@ export const fetchUserLocationAndPostcode = createAsyncThunk(
       `https://api.postcodes.io/postcodes?lon=${longitude}&lat=${latitude}`
     );
     const postcode = await response.json();
-    console.log(postcode.result[0].postcode.split(' ')[0]);
     return postcode.result[0].postcode.split(' ')[0];
   }
 );
@@ -124,7 +122,6 @@ const regionalSlice = createSlice({
         state.userLocation.status = 'loading';
       })
       .addCase(fetchUserLocationAndPostcode.fulfilled, (state, action) => {
-        console.log(action.payload, 'payload');
         state.userLocation.postcode = action.payload;
         state.userLocation.status = 'loaded';
       })
