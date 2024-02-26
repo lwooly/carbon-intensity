@@ -62,7 +62,7 @@ function ForecastCarousel() {
   });
 
   return (
-    <Card sx={{ p: 2, width: '100%' }}>
+    <Card component="article" sx={{ p: 2, width: '100%' }}>
       <Box
         sx={{
           display: 'flex',
@@ -76,7 +76,7 @@ function ForecastCarousel() {
         <ForecastCarouselModal />
       </Box>
       <Typography variant="h6" component="h3">
-        Area: {location}
+        Area: {status === 'loaded' ? location : `${status}...`}
       </Typography>
       {error ? (
         <Typography>API error: {error}</Typography>

@@ -25,14 +25,15 @@ function HomeTitle() {
     >
       <Box sx={{ flex: 1, pr: 2 }}>
         <Typography variant="h3" component="h1" gutterBottom>
-          Sustainable choices <br />
-          through insight...
+          Sustainable choices through insight...
         </Typography>
         <Typography variant="body1" component="p">
-          Welcome to our dashboard, showcasing data from the National Grid ESO
-          Carbon Intensity Forecast API. By tapping into these insightful
-          forecasts, you can make informed, sustainable choices and play an
-          active role in reducing your carbon footprint.{' '}
+          Welcome to our dashboard, offering insights from the National Grid ESO
+          Carbon Intensity Forecast API to support your environmentally
+          conscious decisions. Utilise this data to make informed choices that
+          contribute to sustainability. For instance, consider charging your
+          electric vehicle during periods of low carbon intensity. Together, we
+          can make a meaningful difference in reducing our carbon footprint.{' '}
           {/* This advanced API harnesses the power of cutting-edge Machine Learning and sophisticated power system modeling to anticipate carbon intensity and the generation mix for each region in Great Britain up to 96 hours ahead. */}
         </Typography>
       </Box>

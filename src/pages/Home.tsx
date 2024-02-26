@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/material';
+import { Box } from '@mui/material';
 import { useEffect } from 'react';
 import RegionalMap from '../components/RegionalMap';
 import HomeTitle from '../components/HomeTitle';
@@ -54,21 +54,22 @@ function Home() {
   }, [regionalDataState, dispatch]);
 
   return (
-    <Grid
-      container
-      spacing={2}
-      sx={{ p: 1, maxWidth: '100%', overflow: 'hidden' }}
+    <Box
+      component="section"
+      sx={{ maxWidth: '1100px', marginX: 'auto', marginY: 2 }}
     >
-      <Grid item md={8}>
-        <Box sx={{ mb: { xs: 1, md: 1 } }}>
-          <HomeTitle />
+      <Box sx={{ mb: { xs: 1, md: 1 } }}>
+        <HomeTitle />
+      </Box>
+      <Box sx={{ display: 'flex', gap: 2 }}>
+        <Box sx={{ alignSelf: 'start', flexGrow: 1 }}>
+          <ForecastCarousel />
         </Box>
-        <ForecastCarousel />
-      </Grid>
-      <Grid item md={4}>
-        <RegionalMap />
-      </Grid>
-    </Grid>
+        <Box>
+          <RegionalMap />
+        </Box>
+      </Box>
+    </Box>
   );
 }
 

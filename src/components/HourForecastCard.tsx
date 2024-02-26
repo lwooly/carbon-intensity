@@ -59,7 +59,13 @@ function HourForecastCard({
           zIndex: 2,
         }}
       >
-        {status === 'loading' && <CircularIndeterminate />}
+        {status === 'loading' && (
+          <Box
+            sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+          >
+            <CircularIndeterminate />
+          </Box>
+        )}
         {status === 'loaded' && (
           <>
             <Typography variant="h4" component="p">
