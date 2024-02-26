@@ -1,15 +1,20 @@
-import { useEffect, useState } from 'react';
 import { Box, Button, MobileStepper } from '@mui/material';
+import { Dispatch, MouseEvent, SetStateAction } from 'react';
 
 function CarouselControl({
   cardIndexs,
   setCardIndexs,
   cardNumber,
   showCardChartIndex,
+}: {
+  cardIndexs: number[];
+  setCardIndexs: Dispatch<SetStateAction<number[]>>;
+  cardNumber: number;
+  showCardChartIndex: number | null;
 }) {
   // handle click on buttons to show the correct cards in the carousel.
-  const handleClick = (event) => {
-    const action = event.target.getAttribute('data-action');
+  const handleClick = (event: MouseEvent<HTMLElement>) => {
+    const action = event.currentTarget.getAttribute('data-action');
     let n = 0;
     if (action === 'next') {
       n = 1;
@@ -18,7 +23,7 @@ function CarouselControl({
       n = -1;
     }
     const newCardIndexs = cardIndexs.map((cardIndex) => {
-      return (cardIndex += n);
+      return cardIndex + n;
     });
     setCardIndexs(newCardIndexs);
   };
