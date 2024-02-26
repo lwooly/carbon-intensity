@@ -33,5 +33,9 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 0,
     'react/prop-types': 0,
+    'no-param-reassign': [
+      'error',
+      { props: true, ignorePropertyModificationsFor: ['state'] },
+    ],
   },
 };

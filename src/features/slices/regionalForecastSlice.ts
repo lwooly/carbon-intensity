@@ -4,7 +4,7 @@ import {
   RegionData,
   RegionalForecastState,
 } from '../../types/RegionalForecast.types';
-import { RootState } from '../../app/store';
+import type { RootState } from '../../app/store';
 // import { RegionData, RegionalForecastState } from '../../types/RegionalForecast.types';
 
 export const fetchRegionalData = createAsyncThunk<RegionData>(
@@ -45,10 +45,11 @@ export const fetchAreaFromPostCode = createAsyncThunk(
 export const fetchUserLocationAndPostcode = createAsyncThunk(
   'regionalForecast/fetchLocationAndPostcode',
   async () => {
-    console.log(`dispatched success`);
-    const position = await new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(resolve, reject);
-    });
+    const position: GeolocationPosition = await new Promise(
+      (resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      }
+    );
     const { latitude, longitude } = position.coords;
     const response = await fetch(
       `https://api.postcodes.io/postcodes?lon=${longitude}&lat=${latitude}`
@@ -89,7 +90,7 @@ const regionalSlice = createSlice({
   extraReducers(builder) {
     builder
       // fetch regional data thunk
-      .addCase(fetchRegionalData.pending, (state, action) => {
+      .addCase(fetchRegionalData.pending, (state) => {
         state.status = 'loading';
       })
       .addCase(
@@ -101,11 +102,11 @@ const regionalSlice = createSlice({
       )
       .addCase(fetchRegionalData.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.error.message;
+        state.error = action.error.message ?? null;
       })
 
       // fetch area
-      .addCase(fetchAreaFromPostCode.pending, (state, action) => {
+      .addCase(fetchAreaFromPostCode.pending, (state) => {
         state.searchArea.status = 'loading';
       })
       .addCase(fetchAreaFromPostCode.fulfilled, (state, action) => {
@@ -115,11 +116,11 @@ const regionalSlice = createSlice({
       })
       .addCase(fetchAreaFromPostCode.rejected, (state, action) => {
         state.searchArea.status = 'failed';
-        state.searchArea.error = action.error.message;
+        state.searchArea.error = action.error.message ?? null;
       })
 
       // fetch location and postcode
-      .addCase(fetchUserLocationAndPostcode.pending, (state, action) => {
+      .addCase(fetchUserLocationAndPostcode.pending, (state) => {
         state.userLocation.status = 'loading';
       })
       .addCase(fetchUserLocationAndPostcode.fulfilled, (state, action) => {
@@ -129,7 +130,7 @@ const regionalSlice = createSlice({
       })
       .addCase(fetchUserLocationAndPostcode.rejected, (state, action) => {
         state.userLocation.status = 'failed';
-        state.userLocation.error = action.error.message;
+        state.userLocation.error = action.error.message ?? null;
       });
   },
 });
