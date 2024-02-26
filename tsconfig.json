@@ -6,6 +6,8 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
+    "types": ["vitest/globals", "@testing-library/jest-dom"],
+
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -20,6 +22,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["vite.config.ts", ".eslintrc.cjs", "src", "./jest-setup.ts"],
+  "include": ["vite.config.ts", ".eslintrc.cjs", "src", "./jest-setup.ts", "vitest-setup.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

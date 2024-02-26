@@ -10,12 +10,11 @@ interface BasicPopoverProps {
 // eslint-disable-next-line react/function-component-definition
 const BasicPopover: React.FC<BasicPopoverProps> = ({
   anchorEl,
-  setAnchorEl,
+  // setAnchorEl,
 }) => {
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;

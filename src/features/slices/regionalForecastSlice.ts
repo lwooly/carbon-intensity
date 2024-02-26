@@ -58,7 +58,7 @@ export const fetchUserLocationAndPostcode = createAsyncThunk(
   }
 );
 
-const initialState: RegionalForecastState = {
+export const initialState: RegionalForecastState = {
   regionData: {
     data: [],
   },

@@ -1,12 +1,14 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, assert } from 'vitest';
-import { Provider, useDispatch } from 'react-redux';
+import { describe, it, expect } from 'vitest';
+import { Provider } from 'react-redux';
 
 import { configureStore } from '@reduxjs/toolkit';
 import RegionalMap from './RegionalMap';
 
 import store from '../app/store';
-import regionalForecastReducer from '../features/slices/regionalForecastSlice';
+import regionalForecastReducer, {
+  initialState,
+} from '../features/slices/regionalForecastSlice';
 import stylesReducer from '../features/slices/stylesSlice';
 import testStoreState from '../test/testState.json';
 

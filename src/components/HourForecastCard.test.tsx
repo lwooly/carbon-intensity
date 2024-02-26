@@ -61,7 +61,11 @@ describe('Hour Forecast Card Unit tests', () => {
   it('should show a time', () => {
     // render
     render(
-      <HourForecastCard values={mockForecastValue} status={loadedStatus} />
+      <HourForecastCard
+        values={mockForecastValue}
+        status={loadedStatus}
+        handleClick={() => {}}
+      />
     );
     // act
     // assert
@@ -72,7 +76,11 @@ describe('Hour Forecast Card Unit tests', () => {
   it('should show a time', () => {
     // render
     render(
-      <HourForecastCard values={mockForecastValue} status={loadedStatus} />
+      <HourForecastCard
+        values={mockForecastValue}
+        status={loadedStatus}
+        handleClick={() => {}}
+      />
     );
     // act
     // assert
@@ -83,7 +91,11 @@ describe('Hour Forecast Card Unit tests', () => {
   it('should show a forecast index', () => {
     // render
     render(
-      <HourForecastCard values={mockForecastValue} status={loadedStatus} />
+      <HourForecastCard
+        values={mockForecastValue}
+        status={loadedStatus}
+        handleClick={() => {}}
+      />
     );
     const indexElement = screen.getByText(/VERY HIGH/);
     // assert
@@ -93,7 +105,11 @@ describe('Hour Forecast Card Unit tests', () => {
   it('should show a forecast', () => {
     // render
     render(
-      <HourForecastCard values={mockForecastValue} status={loadedStatus} />
+      <HourForecastCard
+        values={mockForecastValue}
+        status={loadedStatus}
+        handleClick={() => {}}
+      />
     );
     const forecastElement = screen.getByText(/338/);
     // assert
@@ -102,7 +118,11 @@ describe('Hour Forecast Card Unit tests', () => {
 
   it(`should have a background bar div width of to show intensity graphically `, () => {
     render(
-      <HourForecastCard values={mockForecastValue} status={loadedStatus} />
+      <HourForecastCard
+        values={mockForecastValue}
+        status={loadedStatus}
+        handleClick={() => {}}
+      />
     );
     // assert
     const indexBar = screen.getByTestId('index-bar');
@@ -110,7 +130,13 @@ describe('Hour Forecast Card Unit tests', () => {
   });
 
   it('should render loading spinner prior to content loads', () => {
-    render(<HourForecastCard values={mockForecastValue} status="loading" />);
+    render(
+      <HourForecastCard
+        values={mockForecastValue}
+        status="loading"
+        handleClick={() => {}}
+      />
+    );
     expect(screen.getByRole('progressbar')).toBeInTheDocument();
   });
 });
