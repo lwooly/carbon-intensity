@@ -1,5 +1,4 @@
 import { NavLink } from 'react-router-dom';
-import { Link } from '@mui/material';
 
 function NotFound() {
   return (

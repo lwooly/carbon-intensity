@@ -4,6 +4,7 @@ import {
   RegionData,
   RegionalForecastState,
 } from '../../types/RegionalForecast.types';
+import { RootState } from '../../app/store';
 // import { RegionData, RegionalForecastState } from '../../types/RegionalForecast.types';
 
 export const fetchRegionalData = createAsyncThunk<RegionData>(
@@ -138,5 +139,5 @@ export default regionalSlice.reducer;
 export const { addSearchArea } = regionalSlice.actions;
 
 // selectors
-export const selectAllRegionalData = (state) =>
+export const selectAllRegionalData = (state: RootState) =>
   state.regionalForecast.regionData;

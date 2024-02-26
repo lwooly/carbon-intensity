@@ -1,7 +1,6 @@
 import { Box, Grid } from '@mui/material';
 import { useEffect } from 'react';
 import RegionalMap from '../components/RegionalMap';
-import ForecastWidget from '../lib/utils/structureForcecastFn';
 import HomeTitle from '../components/HomeTitle';
 
 import {

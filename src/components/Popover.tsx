@@ -1,7 +1,6 @@
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import { Dispatch, SetStateAction } from 'react';
-import EnergyMixChart from './EnergyMixChart';
 
 interface BasicPopoverProps {
   anchorEl: SVGPathElement;
@@ -14,10 +13,6 @@ const BasicPopover: React.FC<BasicPopoverProps> = ({
   setAnchorEl,
 }) => {
 
-  //   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-  //     setAnchorEl(event.currentTarget);
-  //   };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -26,19 +21,21 @@ const BasicPopover: React.FC<BasicPopoverProps> = ({
   const id = open ? 'simple-popover' : undefined;
 
   return (
-    ( anchorEl && <div>
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-      >
-        <Typography sx={{ p: 2 }}>{anchorEl.id}</Typography>
-      </Popover>
-    </div>)
+    anchorEl && (
+      <div>
+        <Popover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+        >
+          <Typography sx={{ p: 2 }}>{anchorEl.id}</Typography>
+        </Popover>
+      </div>
+    )
   );
 };
 

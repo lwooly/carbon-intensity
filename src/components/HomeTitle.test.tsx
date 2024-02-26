@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import HomeTitle from './HomeTitle';
 import store from '../app/store';
 
-
 describe('HomeTitle unit tests', () => {
   it('renders title', () => {
     // render

@@ -1,12 +1,12 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import ChartDataLabels, { Context } from 'chartjs-plugin-datalabels';
-import { Region } from '../types/RegionalForecast.types';
+import { ForecastDataItem } from '../lib/utils/structureForcecastFn';
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
 // eslint-disable-next-line react/function-component-definition
-function EnergyMixChart({ mixData }: { mixData: Region }) {
+function EnergyMixChart({ mixData }: { mixData: ForecastDataItem | null }) {
   // check if forecast data has been provided. If not return empty.
   if (!mixData) {
     return null;

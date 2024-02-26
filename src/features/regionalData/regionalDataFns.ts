@@ -1,4 +1,6 @@
-type IntensityColors = {
+import { Data } from '../../types/RegionalForecast.types';
+
+export type IntensityColors = {
   [key: string]: string;
 };
 
@@ -10,7 +12,7 @@ export const intensityColors: IntensityColors = {
   'very low': 'hsla(162, 60%, 26%, 1.0)',
 };
 
-export const svgIntensityColors = (data) => {
+export const svgIntensityColors = (data: Data): IntensityColors => {
   const regionalData = data.regions;
 
   const regionIntensities = regionalData.map(
@@ -19,7 +21,9 @@ export const svgIntensityColors = (data) => {
     }
   );
 
-  const regionIntensitiesObj = Object.assign({}, ...regionIntensities);
-
+  const regionIntensitiesObj: IntensityColors = Object.assign(
+    {},
+    ...regionIntensities
+  );
   return regionIntensitiesObj;
 };

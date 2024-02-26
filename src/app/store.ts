@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+// eslint-disable-next-line import/no-cycle
 import regionalForecastReducer from '../features/slices/regionalForecastSlice';
 import stylesReducer from '../features/slices/stylesSlice';
 

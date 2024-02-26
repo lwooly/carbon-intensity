@@ -1,18 +1,13 @@
-import {
-  CssBaseline,
-  createTheme,
-  ThemeProvider,
-  responsiveFontSizes,
-} from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import Home from './pages/Home';
 import Layout from './features/layout/Layout';
-import { renderTheme } from './app/theme';
+import renderTheme from './app/theme';
 import NotFound from './components/NotFound';
+import { useAppSelector } from './app/hooks';
 
 function App() {
-  const isDark = useSelector((state) => state.appStyles.darkMode);
+  const isDark: boolean = useAppSelector((state) => state.appStyles.darkMode);
   const theme = renderTheme(isDark);
 
   // console.log(theme)

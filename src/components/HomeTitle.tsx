@@ -1,11 +1,10 @@
-import { Paper, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, Paper, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
-import enviroImg from '../assets/nicholas-doherty-pONBhDyOFoM-unsplash.jpg';
+// import enviroImg from '../assets/nicholas-doherty-pONBhDyOFoM-unsplash.jpg';
 import { selectAllStyles } from '../features/slices/stylesSlice';
 
 function HomeTitle() {
-  const { padding, margin } = useSelector(selectAllStyles);
+  const { padding } = useSelector(selectAllStyles);
 
   return (
     <Paper

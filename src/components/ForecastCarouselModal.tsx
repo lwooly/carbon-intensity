@@ -2,7 +2,6 @@ import InfoIcon from '@mui/icons-material/Info';
 import BasicModal from './BasicModal';
 
 function ForecastCarouselModal() {
-
   // modal info
   const modalTitle = 'Carbon Intensity Forcast Information';
   const modalDescriptiveText =
