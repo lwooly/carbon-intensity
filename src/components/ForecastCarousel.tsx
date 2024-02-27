@@ -96,8 +96,8 @@ function ForecastCarousel() {
         Area: {status === 'loaded' ? location : `${status}...`}
       </Typography>
       <Typography variant="body1" component="p">
-          Click time bar to view Energy Mix breakdown.
-        </Typography>
+        Click time bar to view Energy Mix breakdown.
+      </Typography>
       {error ? (
         <Typography>API error: {error}</Typography>
       ) : (

@@ -1,6 +1,7 @@
+/* eslint-disable no-param-reassign */
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Box, Paper, Typography } from '@mui/material';
+import { Box, Paper, Typography, useTheme } from '@mui/material';
 import {
   selectAllRegionalData,
   addSearchArea,
@@ -17,6 +18,7 @@ import { Data } from '../types/RegionalForecast.types';
 import RegionalMapImage from './RegionalMapImage';
 
 function RegionalMap() {
+  const theme = useTheme();
   const dispatch = useDispatch();
   // use regional intensity data to colour map svg
   const regionalDataState = useAppSelector(
@@ -42,6 +44,9 @@ function RegionalMap() {
   // state for hovered region
   const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
 
+  // state for selected region
+  const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
+
   // ref svg file to get path elements
   const svgRef = useRef<SVGSVGElement | null>(null);
 
@@ -59,6 +64,7 @@ function RegionalMap() {
     // handle click on map region
     const handleClick = (regionId: string) => {
       dispatch(addSearchArea(regionId));
+      setSelectedRegion(regionId);
     };
 
     // handle hover on region
@@ -66,19 +72,12 @@ function RegionalMap() {
       if (hoveredRegion !== path.id) {
         setHoveredRegion(path.id);
       }
-      // console.log(event.currentTarget)
-      // if (anchorEl !== event.currentTarget) {
-      //   setAnchorEl(event.currentTarget);
-      // }
     };
 
     const handleMouseLeave = () => {
       if (hoveredRegion !== null) {
         setHoveredRegion(null);
       }
-      // if (anchorEl !== null) {
-      //   setAnchorEl(null);
-      // }
     };
 
     // use ref to get paths from rendered svg element to save editing svg manually
@@ -91,19 +90,20 @@ function RegionalMap() {
         // edit svg path styles
         paths.forEach((path) => {
           const regionId = path.id;
+          // change fill colour if hovered
           const fillColor =
-            hoveredRegion === regionId
+            hoveredRegion === regionId || selectedRegion === regionId
               ? lightSvgColors![regionId]
               : svgColors![regionId];
-          // eslint-disable-next-line no-param-reassign
+          // change border colour if selected
+          const strokeColor =
+            selectedRegion === regionId ? theme.palette.text.primary : '';
           path.style.fill = fillColor ?? 'grey';
-          // eslint-disable-next-line no-param-reassign
+          path.style.stroke = strokeColor;
+          path.style.strokeWidth = '0.75px';
           path.onclick = () => handleClick(regionId);
-          // eslint-disable-next-line no-param-reassign
           path.onmouseover = () => handleMouseOver(path);
-          // eslint-disable-next-line no-param-reassign
           path.onmouseleave = () => handleMouseLeave();
-          // eslint-disable-next-line no-param-reassign
           path.role = 'button';
         });
       }
@@ -115,19 +115,32 @@ function RegionalMap() {
     dispatch,
     lightSvgColors,
     svgColors,
+    selectedRegion,
+    theme.palette.grey,
+    theme.palette.text.primary,
   ]);
 
   return (
     <Paper
       component="article"
       sx={{
-        p: 5,
+        p: 2,
+
         width: '100%',
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
       }}
     >
+      <Typography variant="h4" component="h2">
+        Regional Map
+      </Typography>
+      <Typography variant="h6" component="h3">
+        Area: {hoveredRegion}
+      </Typography>
+      <Typography variant="body1" component="p">
+        Click map region to see intensity forecast.
+      </Typography>
       <Box
         className="mapContainer"
         sx={{
@@ -138,6 +151,10 @@ function RegionalMap() {
           justifyContent: 'center',
           alignItems: 'center',
           flexShrink: 1,
+          padding: 2,
+          borderRadius: 0.5,
+          border: 'solid 1px',
+          borderColor: theme.palette.grey[400],
         }}
       >
         {regionalDataState === 'loading' && (
