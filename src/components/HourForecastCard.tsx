@@ -48,6 +48,9 @@ function HourForecastCard({
         alignItems: 'center',
         backgroundColor: 'primary.dark',
         borderRadius: 2,
+        flexGrow: 1,
+        overflow: 'hidden',
+        minHeight: '62.5px',
       }}
     >
       <Box
@@ -57,6 +60,7 @@ function HourForecastCard({
           display: 'flex',
           gap: 3,
           zIndex: 2,
+          alignItems: 'center',
         }}
       >
         {status === 'loading' && (
@@ -68,10 +72,10 @@ function HourForecastCard({
         )}
         {status === 'loaded' && (
           <>
-            <Typography variant="h4" component="p">
+            <Typography variant="h5" component="p">
               {time}
             </Typography>
-            <Typography variant="h4" component="p">
+            <Typography variant="h5" component="p">
               {index.toUpperCase()}: {forecast}{' '}
             </Typography>
           </>
@@ -87,7 +91,6 @@ function HourForecastCard({
           width: barPerc,
           backgroundColor: barColour,
           zIndex: 1,
-          borderRadius: 2,
         }}
       />
     </ListItem>

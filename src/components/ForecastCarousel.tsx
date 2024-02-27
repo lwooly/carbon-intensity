@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { nanoid } from '@reduxjs/toolkit';
 import { Card, Box, Typography, List } from '@mui/material';
 import HourForecastCard from './HourForecastCard';
@@ -31,6 +31,22 @@ function ForecastCarousel() {
   const [showCardChartIndex, setShowCardChartIndex] = useState<number | null>(
     null
   );
+
+  // maintain height of carousel container
+  const [carouselHeight, setCarouselHeight] = useState<number | null>(null);
+
+  const heightRef = useRef<HTMLUListElement>(null);
+
+  const container: HTMLElement | null = heightRef.current;
+
+  useEffect(() => {
+    if (container) {
+      const height: number = container?.offsetHeight;
+      if (carouselHeight === null) setCarouselHeight(height);
+    }
+  }, [heightRef, container, carouselHeight]);
+
+  const carouselHeightProp = carouselHeight || '100%';
 
   // handle click on hour bar to show energy mix data chart for that hour
   const handleBarClick = (cardIndex: number) => {
@@ -70,7 +86,7 @@ function ForecastCarousel() {
           justifyContent: 'space-between',
         }}
       >
-        <Typography variant="h3" component="h2">
+        <Typography variant="h4" component="h2">
           Carbon Intensity Forecast
         </Typography>
         <ForecastCarouselModal />
@@ -82,6 +98,7 @@ function ForecastCarousel() {
         <Typography>API error: {error}</Typography>
       ) : (
         <List
+          ref={heightRef}
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -90,7 +107,8 @@ function ForecastCarousel() {
             borderRadius: 0.5,
             border: 'solid 1px black',
             md: { flexDirection: 'row' },
-            height: 410,
+            height: carouselHeightProp,
+            minHeight: '400px',
             overflow: 'hidden',
           }}
         >

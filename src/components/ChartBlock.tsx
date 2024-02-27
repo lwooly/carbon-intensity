@@ -12,8 +12,8 @@ function ChartBlock({
   chartData: ForecastDataItem | null;
 }) {
   return (
-    <Box sx={{ height: '100%', display: 'flex' }}>
-      <Box sx={{ flexGrow: 1, justifyContent: 'center', display: 'flex' }}>
+    <Box sx={{ height: '100%', display: 'flex', width: '100%' }}>
+      <Box sx={{ flexGrow: 1 }}>
         <EnergyMixChart mixData={chartData} />
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'start' }}>

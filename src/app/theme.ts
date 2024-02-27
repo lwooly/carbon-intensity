@@ -62,6 +62,9 @@ const renderTheme = (isDark: boolean) => {
       h3: {
         fontWeight: 600,
       },
+      h4: {
+        fontWeight: 600,
+      },
     },
     shape: {
       borderRadius: 24,
