@@ -12,15 +12,24 @@ function ChartBlock({
   chartData: ForecastDataItem | null;
 }) {
   return (
-    <Box sx={{ height: '100%', display: 'flex', width: '100%' }}>
-      <Box sx={{ flexGrow: 1 }}>
+    <Box
+      className="chartBlock"
+      sx={{
+        height: '100%',
+        display: 'flex',
+        width: '100%',
+        position: 'relative',
+      }}
+    >
+      <Box sx={{ flexGrow: 1, flexShrink: 1, width: '100%' }}>
         <EnergyMixChart mixData={chartData} />
       </Box>
-      <Box sx={{ display: 'flex', alignItems: 'start' }}>
-        <IconButton onClick={() => setShowCardChartIndex(null)}>
-          <HighlightOffTwoToneIcon />
-        </IconButton>
-      </Box>
+      <IconButton
+        sx={{ position: 'absolute', top: 0, right: 1 }}
+        onClick={() => setShowCardChartIndex(null)}
+      >
+        <HighlightOffTwoToneIcon />
+      </IconButton>
     </Box>
   );
 }

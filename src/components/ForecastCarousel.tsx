@@ -115,6 +115,7 @@ function ForecastCarousel() {
             height: carouselHeightProp,
             minHeight: '400px',
             overflow: 'hidden',
+            width: '100%',
           }}
         >
           {/* show the correct cards in the carousel for the current time range shown */}

@@ -56,13 +56,24 @@ function Home() {
   return (
     <Box
       component="section"
-      sx={{ maxWidth: '1100px', marginX: 'auto', marginY: 2 }}
+      sx={{
+        maxWidth: '1100px',
+        marginX: 'auto',
+        marginY: 2,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 2,
+      }}
     >
-      <Box sx={{ mb: { xs: 1, md: 1 } }}>
-        <HomeTitle />
-      </Box>
-      <Box sx={{ display: 'flex', gap: 2 }}>
-        <Box sx={{ alignSelf: 'start', flexGrow: 1 }}>
+      <HomeTitle />
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 2,
+          flexDirection: { xs: 'column', sm: 'row' },
+        }}
+      >
+        <Box sx={{ alignSelf: 'start', flexGrow: 1, width: '100%' }}>
           <ForecastCarousel />
         </Box>
         <Box sx={{ flexShrink: 0 }}>
