@@ -1,18 +1,24 @@
-import { Box, Paper, Typography } from '@mui/material';
+import { Box, Paper, Typography, useTheme } from '@mui/material';
 import { useSelector } from 'react-redux';
 // import enviroImg from '../assets/nicholas-doherty-pONBhDyOFoM-unsplash.jpg';
 import { selectAllStyles } from '../features/slices/stylesSlice';
 
 function HomeTitle() {
+  const theme = useTheme();
   const {
     padding: { xs, sm, md, lg, xl },
+    darkMode,
   } = useSelector(selectAllStyles);
+
+  const backgroundColor = darkMode
+    ? theme.palette.secondary.dark
+    : theme.palette.secondary.light;
 
   return (
     <Paper
       sx={{
         display: 'flex',
-        bgcolor: 'secondary.light',
+        bgcolor: backgroundColor,
         p: {
           xs,
           sm,

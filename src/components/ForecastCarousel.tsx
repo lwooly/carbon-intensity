@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { nanoid } from '@reduxjs/toolkit';
-import { Card, Box, Typography, List } from '@mui/material';
+import { Card, Box, Typography, List, useTheme } from '@mui/material';
 import HourForecastCard from './HourForecastCard';
 import ForecastCarouselModal from './ForecastCarouselModal';
 import CarouselControl from './CarouselControl';
@@ -9,6 +9,7 @@ import structureForecastFn from '../lib/utils/structureForcecastFn';
 import { useAppSelector } from '../app/hooks';
 
 function ForecastCarousel() {
+  const theme = useTheme();
   // number of cards to show
   const cardsNum = 6;
   // save state of value indexs to display in the carousel.
@@ -105,7 +106,8 @@ function ForecastCarousel() {
             gap: 1,
             padding: 2,
             borderRadius: 0.5,
-            border: 'solid 1px black',
+            border: 'solid 1px',
+            borderColor: theme.palette.grey[400],
             md: { flexDirection: 'row' },
             height: carouselHeightProp,
             minHeight: '400px',

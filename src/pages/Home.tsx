@@ -65,7 +65,7 @@ function Home() {
         <Box sx={{ alignSelf: 'start', flexGrow: 1 }}>
           <ForecastCarousel />
         </Box>
-        <Box sx={{ flexShrink: 0 }} >
+        <Box sx={{ flexShrink: 0 }}>
           <RegionalMap />
         </Box>
       </Box>

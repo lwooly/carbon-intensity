@@ -35,7 +35,7 @@ function CarouselControl({
         steps={cardNumber - cardIndexs.length + 1}
         position="static"
         activeStep={cardIndexs[0]}
-        sx={{ flexGrow: 1 }}
+        sx={{ flexGrow: 1, backgroundColor: 'transparent' }}
         backButton={
           <Button
             variant="outlined"

@@ -1,4 +1,6 @@
-import { ListItem, Typography, Box } from '@mui/material';
+import { useState } from 'react';
+import { ListItem, Typography, Box, useTheme } from '@mui/material';
+import DataUsageIcon from '@mui/icons-material/DataUsage';
 import CircularIndeterminate from './CircularIndeterminate';
 import { intensityColors } from '../features/regionalData/regionalDataFns';
 import { ForecastDataItem } from '../lib/utils/structureForcecastFn';
@@ -12,6 +14,8 @@ function HourForecastCard({
   status: string;
   handleClick: () => void;
 }) {
+  const theme = useTheme();
+  const [hoverState, setHoverState] = useState<boolean>(false);
   // Initialise variables with default values.
   let from = '';
   let forecast;
@@ -34,23 +38,34 @@ function HourForecastCard({
   // render bar chart
   // calculate bar length
   const maxIndex = 400;
-  const barLength = 10 + (90 / maxIndex) * Number(forecast);
+  const barLength = 5 + (80 / maxIndex) * Number(forecast);
   const barPerc = `${barLength}%`;
 
   // determine bar colours
   const barColour: string = intensityColors[index];
 
+  const iconColor = hoverState ? barColour : theme.palette.grey[400];
+
   return (
     <ListItem
       onClick={handleClick}
+      onMouseEnter={() => setHoverState(true)}
+      onMouseLeave={() => setHoverState(false)}
       sx={{
         position: 'relative',
         alignItems: 'center',
-        backgroundColor: 'primary.dark',
+        backgroundColor: 'background.default',
         borderRadius: 2,
         flexGrow: 1,
         overflow: 'hidden',
         minHeight: '62.5px',
+        border: 'solid 1px grey',
+        '&:hover': {
+          cursor: 'pointer',
+          border: 'solid 1px',
+          borderColor: theme.palette.text.primary,
+          boxShadow: '0 0 5px grey',
+        },
       }}
     >
       <Box
@@ -81,6 +96,12 @@ function HourForecastCard({
           </>
         )}
       </Box>
+      <DataUsageIcon
+        sx={{
+          color: iconColor,
+          fontSize: '40px',
+        }}
+      />
       <Box
         data-testid="index-bar"
         sx={{

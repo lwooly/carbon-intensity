@@ -5,19 +5,37 @@ const renderTheme = (isDark: boolean) => {
     palette: {
       mode: isDark ? 'dark' : 'light',
       primary: {
-        main: isDark ? '#000' : '#FFF',
-        contrastText: isDark ? '#FFF' : '#000',
+        main: isDark ? '#90caf9' : '#1976d2', // Light Blue for dark mode, Darker Blue for light mode
+        light: '#63a4ff', // Lighter shade for hover or lighter contexts
+        dark: '#115293', // Darker shade for active or pressed buttons
+        contrastText: isDark ? '#000' : '#fff', // Ensuring text is visible on primary color
       },
       secondary: {
-        main: '#30a76f',
+        main: '#30a76f', // greens
         light: '#d5f2e6',
         dark: '#207867',
+        contrastText: isDark ? '#fff' : '#000', // Ensuring text is visible on secondary color
       },
       background: {
-        default: isDark ? '#333' : '#f7f9fc',
+        default: isDark ? '#121212' : '#f7f9fc', // A darker shade for dark mode that's less harsh than pure black
+        paper: isDark ? '#1e1e1e' : '#fff', // Used for elements like cards and sheets of paper
+      },
+      text: {
+        primary: isDark ? '#fff' : '#000', // Main text color
+        secondary: isDark ? '#b3b3b3' : '#4f4f4f', // Secondary text color, less emphasis
       },
     },
+    // Other theme customizations...
+
     components: {
+      MuiAppBar: {
+        styleOverrides: {
+          root: {
+            backgroundColor: isDark ? '#121212' : '#f7f9fc',
+            color: isDark ? '#fff' : '#000',
+          },
+        },
+      },
       MuiButton: {
         styleOverrides: {
           root: {
