@@ -1,4 +1,5 @@
 import {
+  Data,
   Region,
   RegionalForecastState,
 } from '../../types/RegionalForecast.types';
@@ -39,12 +40,36 @@ const structureForecastFn = ({
   // check store status and forecast data avaialble
   if (status === 'loaded' && forecastData) {
     // manipulate forecast data to easier to use state for card componenents in an object
-    cardData = forecastData
-      // get 12 hour slots from the existing data - to be refined
-      .filter((_, i) => i % 2 === 0 && i < 23)
+    // clone to avoid read only properties
+    const clonedForecastData: Data[] = JSON.parse(JSON.stringify(forecastData));
+
+    const datetime = new Date(clonedForecastData[0].from);
+    const mins = datetime.getMinutes();
+
+    let isHour = true;
+
+    // if in second half hour of the hour update the first half hour slot to show the hour. (mins = 0)
+    if (mins > 0) {
+      const updateTime = clonedForecastData[0].from.replace('30Z', '00Z');
+      clonedForecastData[0].from = updateTime;
+      isHour = false;
+    }
+    cardData = clonedForecastData
+      // get hour slots from the existing data - to be refined
+      // ensure data is always returned for hour slots (not 30mins
+
+      .filter((_, i) => {
+        if (isHour) {
+          // return even indexs
+          return i % 2 === 0;
+        }
+        // return first half hour (for this hour) and then odd indexs for remaining hours
+        return i === 0 || i % 2 !== 0;
+      })
 
       // get specific regional data from the forecast data for the region defined in the search area.
       .map((hourDataGB) => {
+        console.log(hourDataGB);
         const regionData = hourDataGB.regions.filter((region) => {
           return region.shortname === regionName;
         });
