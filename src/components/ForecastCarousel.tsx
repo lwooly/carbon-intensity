@@ -7,6 +7,7 @@ import CarouselControl from './CarouselControl';
 import ChartBlock from './ChartBlock';
 import structureForecastFn from '../lib/utils/structureForcecastFn';
 import { useAppSelector } from '../app/hooks';
+import determinePlugAction from '../lib/utils/plugActionFn';
 
 function ForecastCarousel() {
   const theme = useTheme();
@@ -27,6 +28,9 @@ function ForecastCarousel() {
 
   // reformat the forecast data for use in the carosel
   const { values, location } = structureForecastFn({ forecastState });
+
+  // determine when user should plug in and unplug
+  const updatedValues = determinePlugAction({ values });
 
   // set state for the card index to show chart for (on click)
   const [showCardChartIndex, setShowCardChartIndex] = useState<number | null>(
@@ -58,16 +62,8 @@ function ForecastCarousel() {
     }
   };
 
-  // // // close chart if data or user location updates. Deprecated as good feature to compare locations at same time.
-  // useEffect(() => {
-  //   if (showCardChartIndex !== null) {
-  //     setShowCardChartIndex(null);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [values, location]); // closes on open if showCardIndex is included in dependants
-
   // create card data
-  const cards = values.map((hourData, i) => {
+  const cards = updatedValues.map((hourData, i) => {
     return (
       <HourForecastCard
         key={nanoid()}

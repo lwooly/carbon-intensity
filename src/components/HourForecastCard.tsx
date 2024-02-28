@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { ListItem, Typography, Box, useTheme } from '@mui/material';
+import { ListItem, Typography, Box, useTheme, Tooltip } from '@mui/material';
+import PowerIcon from '@mui/icons-material/Power';
+import PowerOffIcon from '@mui/icons-material/PowerOff';
 import DataUsageIcon from '@mui/icons-material/DataUsage';
 import CircularIndeterminate from './CircularIndeterminate';
 import { intensityColors } from '../features/regionalData/regionalDataFns';
@@ -20,12 +22,16 @@ function HourForecastCard({
   let from = '';
   let forecast;
   let index = '';
+  let plugIn = false;
+  let unPlug = false;
 
   // Check if data is loaded.
   if (status === 'loaded' && values) {
     from = values.from || '';
     forecast = values?.forecast?.intensity?.forecast;
     index = values?.forecast?.intensity?.index || '';
+    plugIn = values?.plugIn || false;
+    unPlug = values?.unPlug || false;
   }
 
   // if from exists create a date. Otherwise create from current time
@@ -107,13 +113,13 @@ function HourForecastCard({
             <Typography variant="h5" component="p" sx={{ flexShrink: 1 }}>
               {forecast}
             </Typography>
-
             <Typography
-              variant="body2"
+              variant="h5"
               component="p"
               sx={{
-                marginLeft: 'auto',
+                margin: 'auto',
                 ...viewDataTextVisible,
+                color: theme.palette.grey[400],
               }}
             >
               {'{View data}'}
@@ -121,6 +127,32 @@ function HourForecastCard({
           </Box>
         )}
       </Box>
+      {plugIn && (
+        <Tooltip
+          arrow
+          placement="left"
+          title={
+            <Typography variant="body1" component="p">
+              Plug in
+            </Typography>
+          }
+        >
+          <PowerIcon sx={{ color: 'green' }} />
+        </Tooltip>
+      )}
+      {unPlug && (
+        <Tooltip
+          arrow
+          placement="left"
+          title={
+            <Typography variant="body1" component="p">
+              Unplug
+            </Typography>
+          }
+        >
+          <PowerOffIcon sx={{ color: 'red' }} />
+        </Tooltip>
+      )}
       <DataUsageIcon
         sx={{
           color: iconColor,

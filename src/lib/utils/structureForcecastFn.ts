@@ -8,6 +8,8 @@ export interface ForecastDataItem {
   from: string;
   to: string;
   forecast: Region;
+  plugIn?: boolean;
+  unPlug?: boolean;
 }
 
 export interface StructureForcecastFnReturn {
@@ -69,7 +71,6 @@ const structureForecastFn = ({
 
       // get specific regional data from the forecast data for the region defined in the search area.
       .map((hourDataGB) => {
-        console.log(hourDataGB);
         const regionData = hourDataGB.regions.filter((region) => {
           return region.shortname === regionName;
         });

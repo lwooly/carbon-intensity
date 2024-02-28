@@ -83,6 +83,6 @@ describe('Regional map unit tests', () => {
     );
     // assert
     const southEnglandRegion = screen.getByTestId('south-england-path');
-    expect(southEnglandRegion).toHaveStyle('fill:hsla(54, 100%, 71%, 1.0)');
+    expect(southEnglandRegion).toHaveStyle('fill:hsla(54, 100%, 45%, 1.0)');
   });
 });

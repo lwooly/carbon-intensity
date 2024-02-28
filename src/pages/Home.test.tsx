@@ -108,7 +108,7 @@ describe('Home page intergration tests', () => {
 
     // assert
     await waitFor(() => {
-      expect(southEnglandRegion).toHaveStyle('fill:hsla(54, 100%, 71%, 1.0)');
+      expect(southEnglandRegion).toHaveStyle('fill:hsla(54, 100%, 45%, 1.0)');
     });
   });
 });
