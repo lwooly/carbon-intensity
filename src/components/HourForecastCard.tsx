@@ -45,6 +45,9 @@ function HourForecastCard({
   const barColour: string = intensityColors[index];
 
   const iconColor = hoverState ? barColour : theme.palette.grey[400];
+  const viewDataTextVisible = hoverState
+    ? { display: { xs: 'none', sm: 'block' } }
+    : { display: 'none' };
 
   return (
     <ListItem
@@ -86,14 +89,36 @@ function HourForecastCard({
           </Box>
         )}
         {status === 'loaded' && (
-          <>
+          <Box
+            sx={{
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'start',
+              alignItems: 'center',
+              gap: '0.5em',
+            }}
+          >
             <Typography variant="h5" component="p">
               {time}
             </Typography>
-            <Typography variant="h5" component="p">
-              {index.toUpperCase()}: {forecast}{' '}
+            <Typography variant="h5" component="p" sx={{ flexShrink: 1 }}>
+              {index !== 'moderate' ? index.toUpperCase() : 'MEDIUM'}
             </Typography>
-          </>
+            <Typography variant="h5" component="p" sx={{ flexShrink: 1 }}>
+              {forecast}
+            </Typography>
+
+            <Typography
+              variant="body2"
+              component="p"
+              sx={{
+                marginLeft: 'auto',
+                ...viewDataTextVisible,
+              }}
+            >
+              {'{View data}'}
+            </Typography>
+          </Box>
         )}
       </Box>
       <DataUsageIcon
