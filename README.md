@@ -3,6 +3,8 @@
 ## About
 The UK Carbon Intensity Dashboard is an interactive platform that visualizes carbon intensity data across the UK. It aims to empower users to make sustainable choices by providing real-time and forecasted data on the carbon intensity of electricity generation. This tool is built using modern web technologies and libraries, designed to deliver a seamless and informative experience.
 
+Live demo: [Carbon Intensity Demo](https://carbon-intensity-smoky.vercel.app/)
+
 ## Tech stack
 - **TypeScript**
 - **Redux**
