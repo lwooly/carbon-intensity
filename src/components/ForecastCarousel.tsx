@@ -75,18 +75,23 @@ function ForecastCarousel() {
   });
 
   return (
-    <Card component="article" sx={{ p: 2, width: '100%' }}>
+    <Card component="article" sx={{ p: 2, width: '100%', minHeight: '100%' }}>
       <Box
         sx={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
+          justifyContent: 'left',
         }}
       >
         <Typography variant="h4" component="h2">
-          Carbon Intensity Forecast
+          Carbon Intensity Forecast{' '}
+          <span style={{ color: theme.palette.grey[400], fontSize: 'large' }}>
+            (gCO2/kWh)
+          </span>
         </Typography>
-        <ForecastCarouselModal />
+        <Box sx={{ marginLeft: 'auto' }}>
+          <ForecastCarouselModal />
+        </Box>
       </Box>
       <Typography variant="h6" component="h3">
         Area: {status === 'loaded' ? location : `${status}...`}

@@ -71,12 +71,13 @@ function Home() {
           display: 'flex',
           gap: 2,
           flexDirection: { xs: 'column', sm: 'row' },
+          alignItems: 'stretch',
         }}
       >
-        <Box sx={{ alignSelf: 'start', flexGrow: 1, width: '100%' }}>
+        <Box sx={{ alignSelf: 'stretch', flexGrow: 1, width: { md: '50%' } }}>
           <ForecastCarousel />
         </Box>
-        <Box sx={{ flexShrink: 0 }}>
+        <Box>
           <RegionalMap />
         </Box>
       </Box>

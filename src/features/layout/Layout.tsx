@@ -10,7 +10,6 @@ function Layout() {
       <main style={{ maxWidth: 1536, margin: 'auto' }}>
         <Outlet />
       </main>
-      <footer />
     </>
   );
 }

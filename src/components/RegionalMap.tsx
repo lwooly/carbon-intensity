@@ -125,7 +125,6 @@ function RegionalMap() {
       component="article"
       sx={{
         p: 2,
-
         width: '100%',
         height: '100%',
         display: 'flex',
@@ -133,13 +132,13 @@ function RegionalMap() {
       }}
     >
       <Typography variant="h4" component="h2">
-        Regional Map
+        Regional Distribution
       </Typography>
       <Typography variant="h6" component="h3">
         Area: {hoveredRegion}
       </Typography>
       <Typography variant="body1" component="p">
-        Click map region to see intensity forecast.
+        Click map to explore regional forecast data.
       </Typography>
       <Box
         className="mapContainer"
